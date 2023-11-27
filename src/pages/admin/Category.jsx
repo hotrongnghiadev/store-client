@@ -1,4 +1,6 @@
 import Breadcrumbs from "../../components/Breadcrumbs";
+import CategoryList from "../../components/admin/CategoryList";
+import CreateCategory from "../../components/admin/CreateCategory";
 // import BrandList from "../../components/admin/BrandList";
 // import CreateBrand from "../../components/admin/CreateBrand";
 

@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import memberReducer from "./member/user.slice";
 import adminReducer from "./admin/user.slice";
 import brandsReducer from "./admin/brand.slice";
+import categoriesReducer from "./admin/category.slice";
 
 const adminPersistConfig = {
   key: "admin",
@@ -22,6 +23,7 @@ export const store = configureStore({
     member: persistReducer(memberPersistConfig, memberReducer),
     admin: persistReducer(adminPersistConfig, adminReducer),
     brands: brandsReducer,
+    categories: categoriesReducer,
   },
   middleware: [thunk],
 });

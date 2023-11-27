@@ -24,6 +24,52 @@ const BrandList = () => {
   const formRef = React.useRef();
   // hook end
 
+  // function start
+  const handleCheckAll = (e) => {
+    setIsCheckAll(e.target.checked);
+    setCheck(brands.map((el) => el.id));
+    setValue(
+      "ids",
+      brands.map((el) => el.id),
+    );
+    if (isCheckAll) {
+      setCheck([]);
+      setValue("ids", []);
+    }
+  };
+  const handleCheck = (e) => {
+    const { value, checked } = e.target;
+    setCheck((prev) => [...prev, value]);
+    if (!checked) setCheck(check.filter((el) => el !== value));
+  };
+
+  const handleDelMany = async (data) => {
+    await brandApi
+      .delMany(data)
+      .then((res) => {
+        toast.success(
+          `You have successfully deleted the ${res.data.deletedCount} checked items`,
+        );
+        dispatch(brandReducer.delMany(check));
+        // reset check after delete``
+        setIsCheckAll(false);
+        setCheck([]);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleDelOne = async (id) => {
+    await brandApi
+      .delMany({ ids: id })
+      .then((res) => {
+        toast.success(
+          `You have successfully deleted the ${res.data.deletedCount} checked items`,
+        );
+        dispatch(brandReducer.delMany(id));
+      })
+      .catch((err) => console.log(err));
+  };
+  // function end
+
   // react-hook-form start
   const { handleSubmit, register, setValue } = useForm({
     shouldFocusError: false,
@@ -32,25 +78,14 @@ const BrandList = () => {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     console.log(data);
     if (
       window.confirm(
         `Are you sure you want to delete the ${check.length} checked brands?`,
       )
     ) {
-      await brandApi
-        .delMany(data)
-        .then((res) => {
-          toast.success(
-            `You have successfully deleted the ${res.data.deletedCount} checked items`,
-          );
-          dispatch(brandReducer.delMany(check));
-          // reset check after delete``
-          setIsCheckAll(false);
-          setCheck([]);
-        })
-        .catch((err) => console.log(err));
+      handleDelMany(data);
     }
   };
   // react-hook-form end
@@ -75,25 +110,6 @@ const BrandList = () => {
   }, [check]);
   // useEffect end
 
-  // function start
-  const handleCheckAll = (e) => {
-    setIsCheckAll(e.target.checked);
-    setCheck(brands.map((el) => el.id));
-    setValue(
-      "ids",
-      brands.map((el) => el.id),
-    );
-    if (isCheckAll) {
-      setCheck([]);
-      setValue("ids", []);
-    }
-  };
-  const handleCheck = (e) => {
-    const { value, checked } = e.target;
-    setCheck((prev) => [...prev, value]);
-    if (!checked) setCheck(check.filter((el) => el !== value));
-  };
-  // function end
   return (
     <>
       {isUpdateBrand && (
@@ -191,7 +207,15 @@ const BrandList = () => {
                       <button
                         className="mr-2"
                         type="button"
-                        // onClick={() => deleteBrand(el._id)}
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              `Are you sure you want to delete ${el.name} ?`,
+                            )
+                          ) {
+                            handleDelOne(el.id);
+                          }
+                        }}
                       >
                         <Icons.IconDelete className="text-2xl text-red-500 " />
                       </button>

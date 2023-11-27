@@ -35,7 +35,7 @@ const CreateBrand = () => {
         console.log(res);
       })
       .catch((err) => {
-        toast.err(err.data?.message);
+        toast.error(err.data?.message);
       });
   };
   // react-hook-form end
