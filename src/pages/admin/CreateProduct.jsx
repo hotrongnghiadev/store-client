@@ -1,14 +1,25 @@
+import React from "react";
+import clsx from "clsx";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
+import * as helpers from "../../utils/helpers";
+import { create } from "../../validators/admin/product.validate";
+import productApi from "../../api/admin/product.api";
+import * as brandReducer from "../../redux/admin/brand.slice";
+import * as categoryReducer from "../../redux/admin/category.slice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import InputField from "../../components/InputField";
 import Icons from "../../components/Icons";
-import EditorField from "../../components/EditorField";
 import SelectField from "../../components/SelectField";
-import clsx from "clsx";
 import FileField from "../../components/FileField";
-import React from "react";
+import Button from "../../components/Button";
+import brandApi from "../../api/admin/brand.api";
+import categoryApi from "../../api/admin/category.api";
+import AdditionalField from "../../components/AdditionalField";
 
 // config routes for breadcrumb
 const routes = [
@@ -27,16 +38,76 @@ const routes = [
 ];
 
 const CreateProduct = () => {
+  // hook start
   const params = useParams();
+  const dispatch = useDispatch();
+  const brands = useSelector((state) => state.brands);
+  const categories = useSelector((state) => state.categories);
+  const [invalid, setInvalid] = React.useState(false);
+  // hook end
+
+  // function start
+  const onSubmit = async (data) => {
+    console.log(data);
+    const formData = new FormData();
+    // handle upload
+    if (data.thumb) formData.append("thumb", data.thumb[0]);
+    delete data.thumb;
+    if (data.images)
+      for (const el of data.images) {
+        formData.append("images", el);
+      }
+    delete data.images;
+    // handle array
+    formData.append("general", JSON.stringify(data.general));
+    delete data.general;
+    formData.append("detail", JSON.stringify(data.detail));
+    delete data.detail;
+    // handle remaining data
+    for (const key in data) {
+      if (data[key]) formData.append(key, data[key]);
+    }
+    // call api
+    const id = toast.loading("Please wait...");
+    await productApi
+      .create(formData)
+      .then((res) => {
+        setInvalid(true);
+        toast.update(id, {
+          render: "Successfully created product",
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+        });
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setInvalid(true);
+        toast.update(id, {
+          render: err.data.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+        });
+      });
+  };
+  // function end
 
   // react-hook-form start
+
   const {
     control,
-    register,
     handleSubmit,
-    formState: { errors, isDirty },
-  } = useForm({ shouldFocusError: false });
+    formState: { errors },
+  } = useForm({
+    mode: "onSubmit",
+    shouldFocusError: false,
+    defaultValues: {},
+    resolver: yupResolver(create),
+  });
 
+  // use arrayField start
   const {
     fields: generalFields,
     append: generalAppend,
@@ -53,14 +124,31 @@ const CreateProduct = () => {
     name: "detail",
     control,
   });
+
   // react-hook-form end
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+
+  // effect start
+  React.useEffect(() => {
+    (async () => {
+      await brandApi
+        .getAll()
+        .then((res) => {
+          dispatch(brandReducer.set(res.data));
+        })
+        .catch((err) => console.log(err));
+      await categoryApi
+        .getAll()
+        .then((res) => {
+          dispatch(categoryReducer.set(res.data));
+        })
+        .catch((err) => console.log(err));
+    })();
+  }, []);
+  // effect end
 
   return (
     <>
-      <div className="max-w-5xl">
+      <div>
         <div className="mb-10">
           <h3 className="mb-2 text-2xl font-bold capitalize">create product</h3>
           <Breadcrumbs params={params} routes={routes} />
@@ -68,34 +156,33 @@ const CreateProduct = () => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-12 gap-8  "
+          className="grid w-full grid-cols-12 gap-8"
+          // encType="multipart/form-data"
         >
           {/* form-create__general start */}
-          <div className="col-span-12 gap-4 rounded-md bg-white p-4">
+          <div className="col-span-12 flex flex-col gap-4 rounded-md bg-white p-4 xl:col-span-6">
             <h3 className="text-xl font-bold capitalize">General</h3>
             <InputField
               control={control}
               label="product name"
               placeholder="click to type"
-              fieldId="productName"
-              validator={register("productName")}
-              error={errors.userName?.message}
+              fieldId="name"
+              error={errors.name?.message}
               className="rounded-md focus:border-blue-500"
               required
             />
             <SelectField
               control={control}
-              label="Product brand"
+              label="prodcut brand"
               placeholder="click to select"
               fieldId="brandId"
-              validator={register("brandId")}
-              defaultValue={null}
-              options={[
-                { value: "chocolate", label: "Chocolate" },
-                { value: "strawberry", label: "Strawberry" },
-                { value: "vanilla", label: "Vanilla" },
-              ]}
-              error={errors.brand?.message}
+              options={brands.map((el) => {
+                return {
+                  label: el.name,
+                  value: el.id,
+                };
+              })}
+              error={errors.brandId?.message}
               required
             />
             <SelectField
@@ -103,60 +190,30 @@ const CreateProduct = () => {
               label="Product category"
               placeholder="click to select"
               fieldId="categoryId"
-              validator={register("categoryId")}
-              defaultValue={null}
-              options={[
-                { value: "chocolate", label: "Chocolate" },
-                { value: "strawberry", label: "Strawberry" },
-                { value: "vanilla", label: "Vanilla" },
-              ]}
-              error={errors.category?.message}
+              options={categories.map((el) => {
+                return {
+                  label: el.name,
+                  value: el.id,
+                };
+              })}
+              error={errors.categoryId?.message}
               required
             />
             {/* useFieldArray start */}
-            <p className="mt-4">Additional fields</p>
-            {generalFields.map((field, index) => {
-              return (
-                <section key={index} className="mt-4">
-                  <input
-                    className="block w-full border-none font-bold italic outline-none"
-                    placeholder="new field name"
-                    {...register(`general.${index}.name`)}
-                  />
-                  <div className="flex items-center gap-2">
-                    <input
-                      className="peer w-full appearance-none rounded-md border border-slate-200 px-4 py-2 font-bold italic placeholder-slate-400  transition-colors focus:outline-none focus:ring-1 focus:ring-transparent"
-                      placeholder="new field content"
-                      {...register(`general.${index}.content`)}
-                    />
-                    <button
-                      type="submit"
-                      onClick={() => generalRemove(index)}
-                      className="flex appearance-none justify-center rounded-sm px-2.5 py-2.5 placeholder-gray-300 focus-within:ring-1 focus:outline-none"
-                    >
-                      <Icons.IconRemove className="text-xl text-red-500" />
-                    </button>
-                  </div>
-                </section>
-              );
-            })}
-
-            <div className="mt-4 flex w-fit  flex-col justify-center whitespace-nowrap text-sm">
-              <button
-                type="button"
-                onClick={() => generalAppend({ name: "", content: "" })}
-                className="ring-focusborder flex appearance-none justify-center rounded-sm  px-2.5 py-2.5 placeholder-gray-300 focus-within:ring-1 focus:outline-none"
-              >
-                <Icons.IconAdd className="text-xl text-blue-500" />
-              </button>
-              <p className={clsx("h-4")}></p>
-            </div>
+            <AdditionalField
+              arrayField={generalFields}
+              removeField={generalRemove}
+              appendField={generalAppend}
+              fieldId="general"
+              control={control}
+              error={errors.general}
+            />
             {/* useFieldArray end */}
           </div>
           {/* form-create__general end */}
 
           {/*form-create__ detail start */}
-          <div className="col-span-12 rounded-md bg-white p-4">
+          <div className="col-span-12 flex flex-col gap-4 rounded-md bg-white p-4 xl:col-span-6">
             <h3 className="text-xl font-bold capitalize">
               first variable product
             </h3>
@@ -165,7 +222,6 @@ const CreateProduct = () => {
               label="product price"
               placeholder="click to type"
               fieldId="price"
-              validator={register("price")}
               error={errors.price?.message}
               className="rounded-md focus:border-blue-500"
               required
@@ -176,7 +232,6 @@ const CreateProduct = () => {
               label="product inventory"
               placeholder="click to type"
               fieldId="inventory"
-              validator={register("inventory")}
               error={errors.inventory?.message}
               className="rounded-md focus:border-blue-500"
               required
@@ -186,77 +241,42 @@ const CreateProduct = () => {
               label="product color"
               placeholder="click to type"
               fieldId="color"
-              validator={register("color")}
               error={errors.color?.message}
               className="rounded-md focus:border-blue-500"
               required
             />
 
-            {/* useFieldArray start */}
-            <p className="mt-4">Additional fields</p>
-            {detailFields.map((field, index) => {
-              return (
-                <section key={index} className="mt-4">
-                  <input
-                    className="block w-full border-none font-bold italic outline-none"
-                    placeholder="new field name"
-                    {...register(`detail.${index}.name`)}
-                  />
-                  <div className="flex items-center gap-2">
-                    <input
-                      className="peer w-full appearance-none rounded-md border border-slate-200 px-4 py-2 font-bold italic placeholder-slate-400  transition-colors focus:outline-none focus:ring-1 focus:ring-transparent"
-                      placeholder="new field content"
-                      {...register(`detail.${index}.content`)}
-                    />
-                    <button
-                      type="submit"
-                      onClick={() => detailRemove(index)}
-                      className="flex appearance-none justify-center rounded-sm px-2.5 py-2.5 placeholder-gray-300 focus-within:ring-1 focus:outline-none"
-                    >
-                      <Icons.IconRemove className="text-xl text-red-500" />
-                    </button>
-                  </div>
-                </section>
-              );
-            })}
-
-            <div className="mt-4 flex w-fit  flex-col justify-center whitespace-nowrap text-sm">
-              <button
-                type="button"
-                onClick={() => detailAppend({ name: "", content: "" })}
-                className="ring-focusborder flex appearance-none justify-center rounded-sm  px-2.5 py-2.5 placeholder-gray-300 focus-within:ring-1 focus:outline-none"
-              >
-                <Icons.IconAdd className="text-xl text-blue-500" />
-              </button>
-              <p className={clsx("h-4")}></p>
-            </div>
-            {/* useFieldArray */}
+            <AdditionalField
+              arrayField={detailFields}
+              removeField={detailRemove}
+              appendField={detailAppend}
+              fieldId="detail"
+              control={control}
+            />
 
             <FileField
               fieldId="thumb"
               control={control}
-              validator={register("thumb")}
               error={errors.thumb?.message}
               label="upload thumbnail image"
-              multiple
+              invalid={invalid}
+              setInvalid={setInvalid}
             />
             <FileField
               fieldId="images"
               control={control}
-              validator={register("images")}
               error={errors.images?.message}
               label="upload some detail images"
               multiple
+              invalid={invalid}
+              setInvalid={setInvalid}
             />
           </div>
           {/*form-create__ detail end */}
 
-          <button
-            type="submit"
-            className="flex w-fit flex-col rounded-md bg-blue-500 px-4 py-2 capitalize text-white"
-          >
-            submit
-          </button>
+          <Button>
+            <Icons.IconAdd className="text-2xl" />
+          </Button>
         </form>
         {/*form-create__detail end */}
       </div>

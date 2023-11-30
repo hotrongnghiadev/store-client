@@ -71,7 +71,7 @@ const CreateCategory = () => {
               className="h-32 rounded-md focus:border-blue-500"
               type="textarea"
             />
-            <SelectField
+            {/* <SelectField
               control={control}
               label="Parent"
               placeholder="click to select"
@@ -84,7 +84,7 @@ const CreateCategory = () => {
                   label: el.name,
                 };
               })}
-            />
+            /> */}
             <Button type="submit">
               <Icons.IconAdd className="text-2xl text-white" />
             </Button>

@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 
 const InputField = (props) => {
   const {
-    messengeOff,
+    messageOff,
     required,
     fieldId,
     label,
@@ -12,16 +12,12 @@ const InputField = (props) => {
     defaultValue,
     className,
     error,
-    setValue,
     type,
-    setFiles,
-    validator,
     ...moreProps
   } = props;
-
   const Comp = type === "textarea" ? "textarea" : "input";
   return (
-    <div className="group mt-4 flex w-full flex-col">
+    <div className="group flex w-full flex-col">
       <label htmlFor={fieldId} className="first-letter:uppercase">
         {label}
         {required && <span className="pl-1 text-red-500">*</span>}
@@ -35,8 +31,10 @@ const InputField = (props) => {
           control={control}
           defaultValue={defaultValue}
           name={fieldId}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value, ref } }) => (
             <Comp
+              ref={ref}
+              value={value || ""}
               autoComplete="off"
               type={type ?? "text"}
               id={fieldId}
@@ -47,24 +45,9 @@ const InputField = (props) => {
                 },
                 className,
               )}
-              {...(validator ?? {})}
               onChange={(e) => {
                 // onChange use when useForm mode is onchange and isDirty, isToched active
                 onChange(e.target.value);
-                if (type === "file") {
-                  if (e.target.files) {
-                    const files = e.target.files;
-                    let arr = [];
-                    for (const key in files) {
-                      if (files && files[key] && files[key].type) {
-                        arr.push(URL.createObjectURL(files[key]));
-                      }
-                    }
-                    setFiles(arr);
-                  }
-                } else {
-                  if (typeof setValue === "function") setValue(e.target.value);
-                }
               }}
               {...moreProps}
             />
@@ -72,7 +55,7 @@ const InputField = (props) => {
         />
         <span className="absolute left-0 top-0 -z-10 block h-full w-full rounded-full"></span>
       </div>
-      {!messengeOff && (
+      {!messageOff && (
         <p
           className={clsx(
             "h-4 pl-4 text-sm text-red-500 peer-focus-within:invisible",

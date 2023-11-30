@@ -9,8 +9,6 @@ const SelectField = (props) => {
   const {
     required,
     error,
-    setValue,
-    value,
     label,
     control,
     defaultValue,
@@ -22,7 +20,10 @@ const SelectField = (props) => {
   const selectRef = useRef();
   return (
     <div className="mt-4 flex w-full flex-col">
-      <label onClick={() => selectRef.current.focus()}>
+      <label
+        className="first-letter:uppercase"
+        onClick={() => selectRef.current.focus()}
+      >
         {label}
         {required && <span className="pl-1 text-red-500">*</span>}
       </label>
@@ -30,37 +31,42 @@ const SelectField = (props) => {
         control={control}
         defaultValue={defaultValue}
         name={fieldId}
-        render={({ field: { onChange } }) => (
+        render={({ field: { onChange, value } }) => (
           <Select
             menuPlacement="auto"
             classNames={{
               placeholder: () => "!text-sm",
               menu: () => "!z-99",
               menuList: () => "!p-0",
-              container: () => "min-w-fit ",
+              container: () => "min-w-fit peer",
               option: (state) =>
                 clsx({
                   "!bg-transparent !text-blue-500": state.isSelected,
                 }),
               control: (state) =>
                 clsx({
-                  "!shadow-none": state.isFocused,
-                  "!border-slate-200": !state.isFocused,
+                  "!border-blue-500 !shadow-none": state.isFocused,
+                  "!border-slate-200": !error && !state.isFocused,
+                  "!border-red-500": error && !state.isFocused,
                 }),
             }}
             options={options}
             onChange={(e) => {
-              e.value ? onChange(e.value) : onChange(e.map((c) => c.value));
-              if (typeof setValue === "function") setValue(e);
+              onChange(e.value);
             }}
             ref={selectRef}
             placeholder={placeholder}
-            value={value}
             {...moreProps}
           />
         )}
       />
-      <p className={clsx("h-4 text-sm text-red-600")}>{error}</p>
+      <p
+        className={clsx(
+          "h-4 pl-4 text-sm text-red-600 peer-focus-within:invisible",
+        )}
+      >
+        {error}
+      </p>
     </div>
   );
 };

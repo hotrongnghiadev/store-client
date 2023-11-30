@@ -4,6 +4,9 @@ import queryString from "query-string";
 const privateAxios = axios.create({
   baseURL: import.meta.env.VITE_BASE_SERVER_URL,
   paramsSerializer: (params) => queryString.stringify(params),
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 privateAxios.interceptors.request.use(
@@ -15,7 +18,7 @@ privateAxios.interceptors.request.use(
       return {
         ...config,
         headers: {
-          "Content-Type": "application/json",
+          ...config.headers,
           Authorization: `Bearer ${data.accessToken}`,
         },
       };

@@ -125,7 +125,7 @@ const CategoryList = () => {
           />
         </Modal>
       )}
-      <div className="gap-4  rounded-md bg-white p-4">
+      <div className="h-full  gap-4 rounded-md bg-white p-4">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-xl font-bold capitalize">category list</h3>
           {/* submit to delete all category already check */}
