@@ -7,6 +7,7 @@ import memberReducer from "./member/user.slice";
 import adminReducer from "./admin/user.slice";
 import brandsReducer from "./admin/brand.slice";
 import categoriesReducer from "./admin/category.slice";
+import productsReducer from "./admin/product.slice";
 
 const adminPersistConfig = {
   key: "admin",
@@ -24,6 +25,7 @@ export const store = configureStore({
     admin: persistReducer(adminPersistConfig, adminReducer),
     brands: brandsReducer,
     categories: categoriesReducer,
+    products: productsReducer,
   },
   middleware: [thunk],
 });

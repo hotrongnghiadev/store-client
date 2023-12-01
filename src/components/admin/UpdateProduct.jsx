@@ -1,13 +1,11 @@
 import React from "react";
-import clsx from "clsx";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 
-import * as helpers from "../../utils/helpers";
-import { create } from "../../validators/admin/product.validate";
+import { update } from "../../validators/admin/product.validate";
 import productApi from "../../api/admin/product.api";
 import * as brandReducer from "../../redux/admin/brand.slice";
 import * as categoryReducer from "../../redux/admin/category.slice";
@@ -20,6 +18,7 @@ import Button from "../../components/Button";
 import brandApi from "../../api/admin/brand.api";
 import categoryApi from "../../api/admin/category.api";
 import AdditionalField from "../../components/AdditionalField";
+import SwitchField from "../SwitchField";
 
 // config routes for breadcrumb
 const routes = [
@@ -32,18 +31,20 @@ const routes = [
     breadcrumb: "products",
   },
   {
-    path: "/admin/product/create",
-    breadcrumb: "create product",
+    path: "/admin/product/update",
+    breadcrumb: "update product",
   },
 ];
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
   // hook start
   const params = useParams();
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brands);
   const categories = useSelector((state) => state.categories);
+  const products = useSelector((state) => state.products);
   const [invalid, setInvalid] = React.useState(false);
+  const [product, setProduct] = React.useState({});
   // hook end
 
   // function start
@@ -51,34 +52,34 @@ const CreateProduct = () => {
     console.log(data);
     const formData = new FormData();
     // handle upload
-    if (data.thumb) formData.append("thumb", data.thumb[0]);
+    if (data.thumb instanceof FileList) formData.append("thumb", data.thumb[0]);
     delete data.thumb;
-    if (data.images)
+    if (data.images instanceof FileList)
       for (const el of data.images) {
         formData.append("images", el);
       }
     delete data.images;
-    // handle array
+    // // handle array
     if (data.general) formData.append("general", JSON.stringify(data.general));
     delete data.general;
     if (data.detail) formData.append("detail", JSON.stringify(data.detail));
     delete data.detail;
     // handle remaining data
     for (const key in data) {
-      if (data[key]) formData.append(key, data[key]);
+      if (typeof data[key] !== "undefined") formData.append(key, data[key]);
     }
     // call api
     const id = toast.loading("Please wait...");
     await productApi
-      .create(formData)
+      .update(formData, params.id)
       .then((res) => {
+        console.log(res);
         toast.update(id, {
-          render: "Successfully created product",
+          render: "Successfully update product",
           type: "success",
           isLoading: false,
           autoClose: 5000,
         });
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -98,12 +99,14 @@ const CreateProduct = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
     shouldFocusError: false,
+    // has been set in the reset(defaulValue) method
     defaultValues: {},
-    resolver: yupResolver(create),
+    resolver: yupResolver(update),
   });
 
   // use arrayField start
@@ -141,6 +144,19 @@ const CreateProduct = () => {
           dispatch(categoryReducer.set(res.data));
         })
         .catch((err) => console.log(err));
+      if (products.length === 0) {
+        await productApi
+          .getOne(params.id)
+          .then((res) => {
+            reset(res.data);
+            setProduct(res.data);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        const product = products.filter((el) => el.id === params.id)[0];
+        setProduct(product);
+        reset(product);
+      }
     })();
   }, []);
   // effect end
@@ -149,7 +165,7 @@ const CreateProduct = () => {
     <>
       <div>
         <div className="mb-10">
-          <h3 className="mb-2 text-2xl font-bold capitalize">create product</h3>
+          <h3 className="mb-2 text-2xl font-bold capitalize">update product</h3>
           <Breadcrumbs params={params} routes={routes} />
         </div>
 
@@ -161,6 +177,11 @@ const CreateProduct = () => {
           {/* form-create__general start */}
           <div className="col-span-12 flex flex-col gap-4 rounded-md bg-white p-4 xl:col-span-6">
             <h3 className="text-xl font-bold capitalize">General</h3>
+            <SwitchField
+              control={control}
+              label="state product"
+              fieldId="status"
+            />
             <InputField
               control={control}
               label="product name"
@@ -258,6 +279,7 @@ const CreateProduct = () => {
               label="upload thumbnail image"
               invalid={invalid}
               setInvalid={setInvalid}
+              defaultValue={product.thumb}
             />
             <FileField
               fieldId="images"
@@ -267,12 +289,13 @@ const CreateProduct = () => {
               multiple
               invalid={invalid}
               setInvalid={setInvalid}
+              defaultValue={product.images}
             />
           </div>
           {/*form-create__ detail end */}
 
           <Button>
-            <Icons.IconAdd className="text-2xl" />
+            <Icons.IconEdit className="text-2xl" />
           </Button>
         </form>
       </div>
@@ -280,4 +303,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

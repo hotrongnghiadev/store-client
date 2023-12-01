@@ -9,6 +9,26 @@ const productApi = {
       },
     });
   },
+  update(data, id) {
+    const url = `product/update/${id}`;
+    return privateAxios.put(url, data, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+  },
+  delMany(data) {
+    const url = "product/delMany/";
+    return privateAxios.delete(url, { params: data });
+  },
+  getAll() {
+    const url = "product/get-all";
+    return privateAxios.get(url);
+  },
+  getOne(id) {
+    const url = `product/get-one/${id}`;
+    return privateAxios.get(url);
+  },
 };
 
 export default productApi;

@@ -29,6 +29,9 @@ const FileFields = (props) => {
   }, [invalid]);
 
   const [previewImages, setPreviewImages] = React.useState([]);
+  React.useEffect(() => {
+    setPreviewImages(defaultValue || []);
+  }, [defaultValue]);
 
   return (
     <>
@@ -56,32 +59,36 @@ const FileFields = (props) => {
         <div className="relative mt-8 h-10 rounded-full bg-gradient-to-l from-blue-500 to-green-500">
           <Controller
             control={control}
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
             name={fieldId}
-            render={({ field: { onChange } }) => (
-              <input
-                ref={inputRef}
-                className={clsx(
-                  "peer invisible h-full w-full  before:visible before:block before:h-full before:w-full before:cursor-pointer  before:rounded-full before:border-none before:p-2 before:text-center before:outline-none before:transition-colors before:content-['']",
-                  className,
-                )}
-                type="file"
-                onChange={(e) => {
-                  onChange(e.target.files);
-                  if (e.target.files) {
-                    const files = e.target.files;
-                    let arr = [];
-                    for (const key in files) {
-                      if (files && files[key] && files[key].type) {
-                        arr.push(URL.createObjectURL(files[key]));
+            render={({ field: { onChange } }) => {
+              return (
+                <>
+                  <input
+                    ref={inputRef}
+                    className={clsx(
+                      "peer invisible h-full w-full  before:visible before:block before:h-full before:w-full before:cursor-pointer  before:rounded-full before:border-none before:p-2 before:text-center before:outline-none before:transition-colors before:content-['']",
+                      className,
+                    )}
+                    type="file"
+                    onChange={(e) => {
+                      onChange(e.target.files);
+                      if (e.target.files) {
+                        const files = e.target.files;
+                        let arr = [];
+                        for (const key in files) {
+                          if (files && files[key] && files[key].type) {
+                            arr.push(URL.createObjectURL(files[key]));
+                          }
+                        }
+                        setPreviewImages(arr);
                       }
-                    }
-                    setPreviewImages(arr);
-                  }
-                }}
-                {...moreProps}
-              />
-            )}
+                    }}
+                    {...moreProps}
+                  />
+                </>
+              );
+            }}
           />
 
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-white first-letter:uppercase">

@@ -31,34 +31,37 @@ const SelectField = (props) => {
         control={control}
         defaultValue={defaultValue}
         name={fieldId}
-        render={({ field: { onChange, value } }) => (
-          <Select
-            menuPlacement="auto"
-            classNames={{
-              placeholder: () => "!text-sm",
-              menu: () => "!z-99",
-              menuList: () => "!p-0",
-              container: () => "min-w-fit peer",
-              option: (state) =>
-                clsx({
-                  "!bg-transparent !text-blue-500": state.isSelected,
-                }),
-              control: (state) =>
-                clsx({
-                  "!border-blue-500 !shadow-none": state.isFocused,
-                  "!border-slate-200": !error && !state.isFocused,
-                  "!border-red-500": error && !state.isFocused,
-                }),
-            }}
-            options={options}
-            onChange={(e) => {
-              onChange(e.value);
-            }}
-            ref={selectRef}
-            placeholder={placeholder}
-            {...moreProps}
-          />
-        )}
+        render={({ field: { onChange, value } }) => {
+          return (
+            <Select
+              value={options.filter((el) => el.value === value)}
+              menuPlacement="auto"
+              classNames={{
+                placeholder: () => "!text-sm",
+                menu: () => "!z-99",
+                menuList: () => "!p-0",
+                container: () => "min-w-fit peer",
+                option: (state) =>
+                  clsx({
+                    "!bg-transparent !text-blue-500": state.isSelected,
+                  }),
+                control: (state) =>
+                  clsx({
+                    "!border-blue-500 !shadow-none": state.isFocused,
+                    "!border-slate-200": !error && !state.isFocused,
+                    "!border-red-500": error && !state.isFocused,
+                  }),
+              }}
+              options={options}
+              onChange={(e) => {
+                onChange(e.value);
+              }}
+              ref={selectRef}
+              placeholder={placeholder}
+              {...moreProps}
+            />
+          );
+        }}
       />
       <p
         className={clsx(

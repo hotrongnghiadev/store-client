@@ -1,9 +1,10 @@
 import MainLayout from "../../layouts/admin/MainLayout";
 import Dashboard from "../../pages/admin/Dashboard";
-import Product from "../../pages/admin/Product";
+import ProductList from "../../pages/admin/ProductList";
 import Brand from "../../pages/admin/Brand";
 import Category from "../../pages/admin/Category";
 import CreateProduct from "../../pages/admin/CreateProduct";
+import UpdateProduct from "../../components/admin/UpdateProduct";
 import HandleRole from "./HandleRole";
 
 const privateRouter = [
@@ -24,11 +25,15 @@ const privateRouter = [
           },
           {
             path: "product/list",
-            element: <Product />,
+            element: <ProductList />,
           },
           {
             path: "product/create",
             element: <CreateProduct />,
+          },
+          {
+            path: "product/update/:id",
+            element: <UpdateProduct />,
           },
           {
             path: "brand",
