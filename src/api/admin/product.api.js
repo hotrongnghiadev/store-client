@@ -29,6 +29,10 @@ const productApi = {
     const url = `product/get-one/${id}`;
     return privateAxios.get(url);
   },
+  filter(query) {
+    const url = `product/filter`;
+    return privateAxios.get(url, { params: query });
+  },
 };
 
 export default productApi;

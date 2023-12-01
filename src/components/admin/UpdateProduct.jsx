@@ -1,6 +1,6 @@
 import React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -40,6 +40,7 @@ const UpdateProduct = () => {
   // hook start
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const brands = useSelector((state) => state.brands);
   const categories = useSelector((state) => state.categories);
   const products = useSelector((state) => state.products);
@@ -91,6 +92,20 @@ const UpdateProduct = () => {
           autoClose: 5000,
         });
       });
+  };
+
+  const handleDelOne = async (id) => {
+    if (window.confirm(`Are you sure you want to delete ${product.name} ?`)) {
+      await productApi
+        .delMany({ ids: id })
+        .then((res) => {
+          toast.success(
+            `You have successfully deleted the ${res.data.deletedCount} checked items`,
+          );
+          navigate("/admin/product/list");
+        })
+        .catch((err) => console.log(err));
+    }
   };
   // function end
 
@@ -158,7 +173,7 @@ const UpdateProduct = () => {
         reset(product);
       }
     })();
-  }, []);
+  }, [params.id]);
   // effect end
 
   return (
@@ -294,9 +309,18 @@ const UpdateProduct = () => {
           </div>
           {/*form-create__ detail end */}
 
-          <Button>
-            <Icons.IconEdit className="text-2xl" />
-          </Button>
+          <div className="flex gap-4">
+            <Button type="submit">
+              <Icons.IconEdit className="text-2xl" />
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-500"
+              onClick={() => handleDelOne(product.id)}
+            >
+              <Icons.IconDelete className=" text-2xl" />
+            </Button>
+          </div>
         </form>
       </div>
     </>

@@ -34,6 +34,7 @@ const Product = () => {
   const products = useSelector((state) => state.products);
   const [isCheckAll, setIsCheckAll] = React.useState(false);
   const [check, setCheck] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   const formRef = React.useRef();
   // hook end
@@ -94,13 +95,6 @@ const Product = () => {
       handleDelMany(data);
     }
   };
-  const handleStatus = async (el) => {
-    console.log(el);
-    // await productApi
-    //   .update({ status: !el.status }, el._id)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-  };
   // function end
 
   // react-hook-form start
@@ -115,11 +109,13 @@ const Product = () => {
 
   // effect start
   React.useEffect(() => {
+    setLoading(true);
     (async () => {
       await productApi
         .getAll()
         .then((res) => {
           dispatch(productReducer.set(res.data.products));
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     })();
@@ -273,9 +269,15 @@ const Product = () => {
                   </tbody>
                 </table>
               </form>
-              {products.length < 1 && (
-                <div className="py-4 text-center text-orange-500 first-letter:uppercase">
-                  product list is empty
+              {products.length < 1 && loading && (
+                <div className="mt-4 flex items-center justify-center gap-4 font-bold text-orange-500">
+                  <Icons.IconLoading className="animate-spin text-3xl " />
+                  <span className="uppercase">processing...</span>
+                </div>
+              )}
+              {!loading && products.length < 1 && (
+                <div className="mt-4 flex items-center justify-center gap-4 font-bold text-orange-500">
+                  <span className="uppercase">empty product list</span>
                 </div>
               )}
             </div>
