@@ -1,21 +1,22 @@
-import privateAxios from "../axios/private.axios";
+import adminClient from "./axios/adminClient.axios";
+import publicAxios from "./axios/publicClient.axios";
 
 const categoryApi = {
   create(data) {
     const url = "category/create";
-    return privateAxios.post(url, data);
+    return adminClient.post(url, data);
   },
   update(id, data) {
     const url = `category/update/${id}`;
-    return privateAxios.put(url, data);
+    return adminClient.put(url, data);
   },
   getAll() {
     const url = "category/getAll";
-    return privateAxios.get(url);
+    return publicAxios.get(url);
   },
   delMany(data) {
     const url = "category/delMany/";
-    return privateAxios.delete(url, { params: data });
+    return adminClient.delete(url, { params: data });
   },
 };
 

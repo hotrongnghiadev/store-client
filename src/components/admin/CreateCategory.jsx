@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 
-import * as categoryReducer from "../../redux/admin/category.slice";
+import * as categoryReducer from "../../redux/category.slice";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
-import * as categoryValidator from "../../validators/admin/category.validate";
-import categoryApi from "../../api/admin/category.api";
+import * as categoryValidator from "../../validators/category.validate";
+import categoryApi from "../../api/category.api";
 import React from "react";
 import Icons from "../Icons";
 import SelectField from "../SelectField";

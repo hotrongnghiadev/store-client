@@ -3,41 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.custom-file-input {
-  width: 100%;
-}
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
-}
-.custom-file-input::before {
-  content: "Upload thumb image";
-  height: 100%;
-  color: black;
-  display: inline-block;
-  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-  border: 1px solid #999;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  font-size: 10pt;
-  width: 100%;
-  text-align: center;
-}
-.custom-file-input:hover::before {
-  border-color: black;
-}
-.custom-file-input:active {
-  outline: 0;
-}
-.custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-
 @layer base {
   html {
     @apply text-base;
@@ -48,6 +13,7 @@
   }
   :root {
     --green-500: #84cc16;
+    --paging-height: 100px;
   }
 
   /* custom editor wysiwyg start */
@@ -98,3 +64,112 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+/* custom-react-slick start */
+button.slick-arrow,
+button.slick-arrow:focus {
+  width: 2rem;
+  height: 4rem;
+  z-index: 9;
+  border-radius: 5px;
+  background-color: #246764;
+  opacity: 0.3;
+  display: flex;
+}
+
+button.slick-arrow:hover {
+  opacity: initial;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+button.slick-arrow:before {
+  font-size: 2rem;
+  color: #666;
+}
+button.slick-arrow:focus {
+  background-color: #00000059;
+}
+button.slick-arrow:hover:before {
+  color: #666;
+}
+button.slick-next {
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+}
+button.slick-prev {
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+}
+button.slick-next:before {
+  content: "\276F";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+button.slick-prev:before {
+  content: "\276E";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.slick-dots.slick-thumb li {
+  width: var(--paging-height);
+  height: var(--paging-height);
+  border: 1px solid #efefef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 0.5rem;
+}
+.slick-dots.slick-thumb {
+  bottom: calc(5px - var(--paging-height));
+  display: flex !important;
+  justify-content: center;
+}
+.slick-dots.slick-thumb li {
+  filter: grayscale(100%);
+}
+.slick-dots.slick-thumb li.slick-active {
+  filter: initial;
+}
+/* custom-react-slick end */
+
+/* custom-input-file start */
+.custom-file-input {
+  width: 100%;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: "Upload thumb image";
+  height: 100%;
+  color: black;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+  width: 100%;
+  text-align: center;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+/* custom-input-file end */

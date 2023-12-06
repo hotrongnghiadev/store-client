@@ -4,10 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Icons from "../../components/Icons";
-import * as adminReducers from "../../redux/admin.slice";
+import * as memberReducers from "../../redux/member.slice";
 import * as userValidator from "../../validators/user.validate";
 import userApi from "../../api/user.api";
 import InputField from "../../components/InputField";
@@ -30,7 +30,7 @@ const Signin = () => {
   const navigate = useNavigate();
 
   let { invalid } = useParams();
-  const admin = useSelector((state) => state.admin);
+  const member = useSelector((state) => state.member);
 
   const {
     control,
@@ -38,7 +38,6 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // mode: "onBlur",
     resolver: yupResolver(userValidator.signin),
     shouldFocusError: false,
   });
@@ -47,11 +46,12 @@ const Signin = () => {
     await userApi
       .signin(body)
       .then((res) => {
-        if (res.data.role !== "admin")
-          toast.error("Please signin with admin account");
+        if (res.data.role !== "member")
+          toast.error("Please signin with memeber account");
         else {
-          dispatch(adminReducers.signin(res.data));
-          navigate("/admin");
+          dispatch(memberReducers.signin(res.data));
+          navigate("/");
+          toast.success("Signin in successfully");
         }
       })
       .catch((err) => {
@@ -60,11 +60,11 @@ const Signin = () => {
   };
 
   React.useEffect(() => {
-    if (admin.data?.role === "admin") {
-      navigate("/admin");
-      toast.warn("Logged in with admin account");
+    if (member.data?.role === "user") {
+      navigate("/");
+      toast.warn("Logged in with user account");
     }
-    if (invalid === "invalid") toast.error("Please signin with admin account");
+    if (invalid === "invalid") toast.error("Please signin with user account");
   }, []);
 
   return (
@@ -81,7 +81,7 @@ const Signin = () => {
             className="w-full md:pl-24 lg:w-[40rem]"
           >
             <h3 className="text-center text-2xl font-bold capitalize">
-              admin login
+              member login
             </h3>
             <InputField
               control={control}
@@ -100,7 +100,6 @@ const Signin = () => {
               fieldId="password"
               validator={register("password")}
               error={errors.password?.message}
-              setValue={() => {}}
               type="password"
               icon={<Icons.IconPassword />}
               className="rounded-full focus:animate-my-burn"
@@ -118,6 +117,12 @@ const Signin = () => {
               </button>
               <div className=" absolute left-[-100%] top-0 -z-10 h-full w-[200%] rounded-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-200 peer-hover:left-0 peer-active:scale-y-90"></div>
             </div>
+            <Link
+              to="/signup"
+              className="block text-center text-green-500 underline"
+            >
+              Signup new account
+            </Link>
           </form>
         </div>
       </div>

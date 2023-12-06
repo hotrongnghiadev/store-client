@@ -3,11 +3,11 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 
-import memberReducer from "./member/user.slice";
-import adminReducer from "./admin/user.slice";
-import brandsReducer from "./admin/brand.slice";
-import categoriesReducer from "./admin/category.slice";
-import productsReducer from "./admin/product.slice";
+import memberReducer from "./member.slice";
+import adminReducer from "./admin.slice";
+import brandsReducer from "./brand.slice";
+import categoriesReducer from "./category.slice";
+import productsReducer from "./product.slice";
 
 const adminPersistConfig = {
   key: "admin",

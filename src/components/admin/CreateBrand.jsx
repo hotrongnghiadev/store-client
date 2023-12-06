@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 
-import * as brandReducer from "../../redux/admin/brand.slice";
+import * as brandReducer from "../../redux/brand.slice";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
-import * as brandValidator from "../../validators/admin/brand.validate";
-import brandApi from "../../api/admin/brand.api";
+import * as brandValidator from "../../validators/brand.validate";
+import brandApi from "../../api/brand.api";
 import React from "react";
 import Icons from "../Icons";
 

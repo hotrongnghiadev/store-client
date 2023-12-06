@@ -1,24 +1,22 @@
 import React from "react";
-import clsx from "clsx";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 
-import * as helpers from "../../utils/helpers";
-import { create } from "../../validators/admin/product.validate";
-import productApi from "../../api/admin/product.api";
-import * as brandReducer from "../../redux/admin/brand.slice";
-import * as categoryReducer from "../../redux/admin/category.slice";
+import { create } from "../../validators/product.validate";
+import productApi from "../../api/product.api";
+import * as brandReducer from "../../redux/brand.slice";
+import * as categoryReducer from "../../redux/category.slice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import InputField from "../../components/InputField";
 import Icons from "../../components/Icons";
 import SelectField from "../../components/SelectField";
 import FileField from "../../components/FileField";
 import Button from "../../components/Button";
-import brandApi from "../../api/admin/brand.api";
-import categoryApi from "../../api/admin/category.api";
+import brandApi from "../../api/brand.api";
+import categoryApi from "../../api/category.api";
 import AdditionalField from "../../components/AdditionalField";
 
 // config routes for breadcrumb
@@ -72,6 +70,8 @@ const CreateProduct = () => {
     await productApi
       .create(formData)
       .then((res) => {
+        reset();
+        setInvalid(true);
         toast.update(id, {
           render: "Successfully created product",
           type: "success",
@@ -98,6 +98,7 @@ const CreateProduct = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
@@ -105,6 +106,7 @@ const CreateProduct = () => {
     defaultValues: {},
     resolver: yupResolver(create),
   });
+  console.log(errors);
 
   // use arrayField start
   const {
@@ -271,7 +273,7 @@ const CreateProduct = () => {
           </div>
           {/*form-create__ detail end */}
 
-          <Button>
+          <Button type="submit">
             <Icons.IconAdd className="text-2xl" />
           </Button>
         </form>

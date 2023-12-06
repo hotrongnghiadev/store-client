@@ -3,13 +3,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-import * as categoryReducer from "../../redux/admin/category.slice";
-import * as categoryValidator from "../../validators/admin/category.validate";
+import * as categoryReducer from "../../redux/category.slice";
+import * as categoryValidator from "../../validators/category.validate";
 import InputField from "../InputField";
 import Button from "../Button";
 import Icons from "../Icons";
 import { toast } from "react-toastify";
-import categoryApi from "../../api/admin/category.api";
+import categoryApi from "../../api/category.api";
 
 const UpdateCategory = (props) => {
   // props start

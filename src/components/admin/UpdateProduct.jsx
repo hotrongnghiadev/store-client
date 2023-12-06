@@ -5,18 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 
-import { update } from "../../validators/admin/product.validate";
-import productApi from "../../api/admin/product.api";
-import * as brandReducer from "../../redux/admin/brand.slice";
-import * as categoryReducer from "../../redux/admin/category.slice";
+import { update } from "../../validators/product.validate";
+import productApi from "../../api/product.api";
+import * as brandReducer from "../../redux/brand.slice";
+import * as categoryReducer from "../../redux/category.slice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import InputField from "../../components/InputField";
 import Icons from "../../components/Icons";
 import SelectField from "../../components/SelectField";
 import FileField from "../../components/FileField";
 import Button from "../../components/Button";
-import brandApi from "../../api/admin/brand.api";
-import categoryApi from "../../api/admin/category.api";
+import brandApi from "../../api/brand.api";
+import categoryApi from "../../api/category.api";
 import AdditionalField from "../../components/AdditionalField";
 import SwitchField from "../SwitchField";
 

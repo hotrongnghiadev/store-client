@@ -11,6 +11,9 @@ export default {
     },
     // overriding
     extend: {
+      colors: {
+        primary: "#FEBF4E",
+      },
       keyframes: {
         burn: {
           "100%": { "box-shadow": "var(--green-500) 0 0 1.25rem" },

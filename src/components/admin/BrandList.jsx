@@ -2,8 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import * as brandReducer from "../../redux/admin/brand.slice";
-import brandApi from "../../api/admin/brand.api";
+import * as brandReducer from "../../redux/brand.slice";
+import brandApi from "../../api/brand.api";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../Button";
 import Icons from "../Icons";

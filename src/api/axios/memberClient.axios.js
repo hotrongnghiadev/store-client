@@ -1,7 +1,7 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const privateAxios = axios.create({
+const memberClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_SERVER_URL,
   paramsSerializer: (params) => queryString.stringify(params),
   headers: {
@@ -9,17 +9,17 @@ const privateAxios = axios.create({
   },
 });
 
-privateAxios.interceptors.request.use(
+memberClient.interceptors.request.use(
   async (config) => {
-    const admin = localStorage.getItem("persist:admin");
-    if (admin && typeof admin === "string") {
-      const adminJSON = JSON.parse(admin);
-      const data = JSON.parse(adminJSON?.data);
+    const user = localStorage.getItem("persist:member");
+    if (user && typeof user === "string") {
+      const userJSON = JSON.parse(user);
+      const accessToken = JSON.parse(userJSON?.accessToken);
       return {
         ...config,
         headers: {
           ...config.headers,
-          Authorization: `Bearer ${data.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       };
     }
@@ -30,7 +30,7 @@ privateAxios.interceptors.request.use(
   },
 );
 
-privateAxios.interceptors.response.use(
+memberClient.interceptors.response.use(
   (res) => {
     return res;
   },
@@ -39,4 +39,4 @@ privateAxios.interceptors.response.use(
   },
 );
 
-export default privateAxios;
+export default memberClient;

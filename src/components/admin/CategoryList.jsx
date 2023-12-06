@@ -2,8 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import * as categoryReducer from "../../redux/admin/category.slice";
-import categoryApi from "../../api/admin/category.api";
+import * as categoryReducer from "../../redux/category.slice";
+import categoryApi from "../../api/category.api";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../Button";
 import Icons from "../Icons";

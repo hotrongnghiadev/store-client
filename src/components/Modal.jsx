@@ -10,6 +10,7 @@ const Modal = (props) => {
   // effect start
   React.useEffect(() => {
     const clickHandler = ({ target }) => {
+      console.log(target);
       if (!modal.current) return;
       // contains return true if node contains param in dom model
       if (!isOpen || modal.current.contains(target)) return;

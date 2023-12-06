@@ -47,3 +47,7 @@ export const update = yup.object().shape({
     }),
   ),
 });
+
+export const rate = yup.object().shape({
+  star: yup.number().typeError("Trường này bắt buộc").min(1).max(5),
+});

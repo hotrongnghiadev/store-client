@@ -1,21 +1,22 @@
-import privateAxios from "../axios/private.axios";
+import adminClient from "./axios/adminClient.axios";
+import publicAxios from "./axios/publicClient.axios";
 
 const brandApi = {
   create(data) {
     const url = "brand/create";
-    return privateAxios.post(url, data);
+    return adminClient.post(url, data);
   },
   update(id, data) {
     const url = `brand/update/${id}`;
-    return privateAxios.put(url, data);
+    return adminClient.put(url, data);
   },
   getAll() {
     const url = "brand/getAll";
-    return privateAxios.get(url);
+    return publicAxios.get(url);
   },
   delMany(data) {
     const url = "brand/delMany/";
-    return privateAxios.delete(url, { params: data });
+    return adminClient.delete(url, { params: data });
   },
 };
 

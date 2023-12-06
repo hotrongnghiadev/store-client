@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Icons from "../../components/Icons";
-import * as adminReducers from "../../redux/admin.slice";
+import * as memberReducers from "../../redux/member.slice";
 import * as userValidator from "../../validators/user.validate";
 import userApi from "../../api/user.api";
 import InputField from "../../components/InputField";
@@ -30,7 +30,7 @@ const Signin = () => {
   const navigate = useNavigate();
 
   let { invalid } = useParams();
-  const admin = useSelector((state) => state.admin);
+  const member = useSelector((state) => state.member);
 
   const {
     control,
@@ -38,20 +38,20 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // mode: "onBlur",
-    resolver: yupResolver(userValidator.signin),
+    resolver: yupResolver(userValidator.signup),
     shouldFocusError: false,
   });
 
   const onSubmit = async (body) => {
     await userApi
-      .signin(body)
+      .signup(body)
       .then((res) => {
-        if (res.data.role !== "admin")
-          toast.error("Please signin with admin account");
+        if (res.data.role !== "member")
+          toast.error("Please signup with member account");
         else {
-          dispatch(adminReducers.signin(res.data));
-          navigate("/admin");
+          toast.success("Signup in successfully");
+          dispatch(memberReducers.signin(res.data));
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -60,11 +60,10 @@ const Signin = () => {
   };
 
   React.useEffect(() => {
-    if (admin.data?.role === "admin") {
-      navigate("/admin");
-      toast.warn("Logged in with admin account");
+    if (member.data?.role === "member") {
+      navigate("/");
+      toast.warn("Logged in with member account, logout to signup new account");
     }
-    if (invalid === "invalid") toast.error("Please signin with admin account");
   }, []);
 
   return (
@@ -81,7 +80,7 @@ const Signin = () => {
             className="w-full md:pl-24 lg:w-[40rem]"
           >
             <h3 className="text-center text-2xl font-bold capitalize">
-              admin login
+              member login
             </h3>
             <InputField
               control={control}
@@ -100,7 +99,17 @@ const Signin = () => {
               fieldId="password"
               validator={register("password")}
               error={errors.password?.message}
-              setValue={() => {}}
+              type="password"
+              icon={<Icons.IconPassword />}
+              className="rounded-full focus:animate-my-burn"
+            />
+            <InputField
+              control={control}
+              label="Confirm Password"
+              placeholder="click to type"
+              fieldId="confirmPassword"
+              validator={register("confirmPassword")}
+              error={errors.confirmPassword?.message}
               type="password"
               icon={<Icons.IconPassword />}
               className="rounded-full focus:animate-my-burn"

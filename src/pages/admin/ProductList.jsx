@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import { formatNumber } from "../../utils/helpers";
-import * as productReducer from "../../redux/admin/product.slice";
-import productApi from "../../api/admin/product.api";
+import * as productReducer from "../../redux/product.slice";
+import productApi from "../../api/product.api";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Button from "../../components/Button";
 import Icons from "../../components/Icons";

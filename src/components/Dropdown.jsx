@@ -2,11 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 
-import Icons from "../Icons";
-
-const DropdownUser = () => {
+const Dropdown = (props) => {
+  const { children, list, position = "left" } = props;
   const [isDropdown, setIsDropdown] = React.useState(false);
-
   const dropdownList = React.useRef();
   const trigger = React.useRef();
 
@@ -15,7 +13,12 @@ const DropdownUser = () => {
     const clickHandler = ({ target }) => {
       if (!dropdownList.current) return;
       // contains return true if node contains param in dom model
-      if (!isDropdown || dropdownList.current.contains(target)) return;
+      if (
+        !isDropdown ||
+        dropdownList.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
 
       // return only prevent setIsDropdown(false)
       setIsDropdown(false);
@@ -29,16 +32,12 @@ const DropdownUser = () => {
         {/* dropdown start */}
         <Link
           ref={trigger}
-          onClick={(e) => {
-            // prevent onClick event in document node excecute make isDropdown become false again
-            e.stopPropagation();
+          onClick={() => {
             setIsDropdown(!isDropdown);
           }}
           className="flex items-center gap-3"
         >
-          <div className=" rounded-full border border-slate-200 bg-slate-100 p-1">
-            <Icons.IconBxsUser className="text-xl text-slate-500   " />
-          </div>
+          {children}
         </Link>
         {/* dropdown end */}
 
@@ -46,24 +45,14 @@ const DropdownUser = () => {
         <div
           ref={dropdownList}
           className={clsx(
-            "absolute right-0 mt-2 max-h-72 w-72 rounded-md border border-slate-200 bg-white  shadow",
+            "absolute z-999 mt-2 w-40 min-w-full rounded-md border  border-slate-200 bg-white p-2 shadow",
+            `${position === "right" ? "left-0" : "right-0"}`,
             {
-              hidden: !isDropdown,
+              hidden: !isDropdown || !list,
             },
           )}
         >
-          <div className="p-2">User</div>
-          <ul>
-            <li className="">
-              <div className="border-t border-slate-200 p-2">Item 1</div>
-            </li>
-            <li className="">
-              <div className="border-t border-slate-200 p-2">Item 2</div>
-            </li>
-            <li className="">
-              <div className="border-t border-slate-200 p-2">Item 3</div>
-            </li>
-          </ul>
+          {list || null}
         </div>
         {/* dropdown-list end */}
       </div>
@@ -71,4 +60,4 @@ const DropdownUser = () => {
   );
 };
 
-export default DropdownUser;
+export default Dropdown;

@@ -3,13 +3,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-import * as brandReducer from "../../redux/admin/brand.slice";
-import * as brandValidator from "../../validators/admin/brand.validate";
+import * as brandReducer from "../../redux/brand.slice";
+import * as brandValidator from "../../validators/brand.validate";
 import InputField from "../InputField";
 import Button from "../Button";
 import Icons from "../Icons";
 import { toast } from "react-toastify";
-import brandApi from "../../api/admin/brand.api";
+import brandApi from "../../api/brand.api";
 
 const UpdateBrand = (props) => {
   // props start

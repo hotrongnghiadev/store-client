@@ -33,8 +33,8 @@ const Sidebar = (props) => {
             <h1 className="text-xl font-bold capitalize">shop admin</h1>
           </Link>
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <div className="absolute right-0 top-2 hidden h-8 w-10 items-center justify-center  rounded-md text-slate-500 hover:bg-slate-200 group-hover:flex">
-              <Icons.IconBxChevronsLeft className="text-2xl" />
+            <div className="absolute right-0 top-2  flex h-8 w-10 items-center justify-center  rounded-md text-slate-500 hover:bg-slate-200 ">
+              <Icons.IconClose className="text-2xl" />
             </div>
           </button>
         </div>

@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const slice = createSlice({
-  name: "memberUser",
+  name: "admin",
   initialState: {
+    accessToken: null,
     data: null,
   },
   reducers: {
     signin: (state, action) => {
-      state.data = action.payload;
+      const { accessToken, ...data } = action.payload;
+      state.accessToken = accessToken;
+      state.data = data;
     },
   },
 });

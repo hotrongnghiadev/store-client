@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import Icons from "../../components/Icons";
-import DropdownNotification from "../../components/admin/DropdownNotification";
-import DropdownUser from "../../components/admin/DropdownUser";
-import Search from "../../components/admin/Search";
+import Notification from "../../components/admin/Notification";
+import Account from "../../components/admin/Account";
+import Search from "../../components/Search";
 
 const Header = (props) => {
   const { isSidebarOpen, setIsSidebarOpen } = props;
@@ -34,7 +34,7 @@ const Header = (props) => {
           {/* button end */}
 
           {/* search start */}
-          <div className="pl-4">
+          <div className="w-96">
             <Search />
           </div>
           {/* search end */}
@@ -43,8 +43,8 @@ const Header = (props) => {
 
         {/* header-right start */}
         <div className="flex items-center gap-8">
-          <DropdownNotification />
-          <DropdownUser />
+          <Notification />
+          <Account />
         </div>
         {/* header-right end */}
       </header>

@@ -6,7 +6,7 @@ import Header from "./Header";
 
 const MainLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage(
-    "adminSidebar",
+    "memberSidebar",
     false,
   );
   return (
@@ -23,7 +23,7 @@ const MainLayout = () => {
           />
           {/* outlet start */}
           <main className="flex w-full justify-center ">
-            <div className="w-full max-w-screen-xl px-8 py-4 ">
+            <div className="mt-4 w-full max-w-screen-xl px-2">
               <Outlet />
             </div>
           </main>

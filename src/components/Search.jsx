@@ -1,11 +1,11 @@
 import React from "react";
 
-import useDebounce from "../../hooks/useDebouce";
-import Icons from "../Icons";
-import productApi from "../../api/admin/product.api";
+import useDebounce from "../hooks/useDebouce";
+import Icons from "./Icons";
+import productApi from "../api/product.api";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import { formatNumber } from "../../utils/helpers";
+import { formatNumber } from "../utils/helpers";
 
 const Search = () => {
   // hook start
@@ -68,7 +68,7 @@ const Search = () => {
   return (
     <>
       <form
-        className={clsx("relative w-96 rounded-md pl-4 transition-colors", {
+        className={clsx("relative w-full rounded-md pl-4 transition-colors", {
           "bg-slate-200": value,
         })}
       >
@@ -112,7 +112,7 @@ const Search = () => {
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
           className={clsx(
-            "absolute right-0 mt-4 flex w-full flex-col rounded-md border bg-white shadow-md",
+            "absolute right-0 z-999 mt-4 flex w-full flex-col rounded-md border bg-white shadow-md",
             `${
               dropdownOpen === true && results.length !== 0 ? "block" : "hidden"
             }`,
