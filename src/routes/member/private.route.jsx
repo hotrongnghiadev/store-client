@@ -7,11 +7,10 @@ const privateRoute = [
     element: <HandleRole />,
     children: [
       {
-        path: "/",
         element: <MainLayout />,
         children: [
           {
-            path: "cart",
+            path: "/cart",
             element: <Cart />,
           },
         ],

@@ -8,6 +8,7 @@ import Logo from "../../assets/images/logo.svg";
 import Dropdown from "../../components/Dropdown";
 import Search from "../../components/Search";
 import { toast } from "react-toastify";
+import TippyHeadless from "@tippyjs/react/headless";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -24,94 +25,7 @@ const Header = (props) => {
   // function end
   return (
     <>
-      <header className="sticky top-0 z-99  w-full  bg-white shadow">
-        {/* header-top start */}
-        <div className="flex justify-between border-b border-slate-200 px-4  py-1 text-sm font-bold sm:flex sm:justify-between ">
-          <ul className="flex gap-8 ">
-            <li>
-              <span className="capitalize">track order</span>
-            </li>
-            <li>
-              <span className="capitalize">support</span>
-            </li>
-          </ul>
-
-          <ul className="flex gap-8">
-            <div className="hidden gap-8 sm:flex">
-              <Dropdown
-                list={
-                  <>
-                    <ul>
-                      <li className="rounded-md px-2 capitalize ">
-                        united state
-                      </li>
-                      <li className="rounded-md px-2 capitalize ">
-                        bangladesh
-                      </li>
-                      <li className="rounded-md px-2 capitalize ">india</li>
-                    </ul>
-                  </>
-                }
-              >
-                <button className="flex">
-                  <span className="whitespace-nowrap capitalize">
-                    united state
-                  </span>
-                  <Icons.IconDown />
-                </button>
-              </Dropdown>
-              <Dropdown
-                list={
-                  <>
-                    <ul>
-                      <li className="rounded-md px-2 uppercase ">usd</li>
-                      <li className="rounded-md px-2 uppercase ">btd</li>
-                    </ul>
-                  </>
-                }
-              >
-                <button className="flex">
-                  <span className="uppercase">usd</span>
-                  <Icons.IconDown />
-                </button>
-              </Dropdown>
-            </div>
-
-            {/* account start */}
-            {member?.data ? (
-              <Dropdown
-                list={
-                  <>
-                    <ul>
-                      <li className="rounded-md px-2 capitalize ">
-                        <Link
-                          onClick={() => handleLogout()}
-                          className="block w-full hover:text-blue-500"
-                        >
-                          Logout
-                        </Link>
-                      </li>
-                    </ul>
-                  </>
-                }
-              >
-                <button className="flex">
-                  <span className="font-bold capitalize">
-                    {member?.data?.userName}
-                  </span>
-                  <Icons.IconDown />
-                </button>
-              </Dropdown>
-            ) : (
-              <Link to="/signin" className="block w-full hover:text-blue-500">
-                Signin
-              </Link>
-            )}
-            {/* account end */}
-          </ul>
-        </div>
-        {/* header-top end */}
-
+      <header className="sticky top-0 z-999  w-full  bg-white shadow">
         {/* header-content start */}
         <div className="flex items-center justify-between px-4 py-2">
           {/* handle show/hidden sidebar */}
@@ -147,7 +61,7 @@ const Header = (props) => {
             {/* search end */}
           </div>
           {/* cart start */}
-          <div className="flex cursor-pointer items-center gap-x-1 rounded-md px-4 py-2 ">
+          <div className="flex cursor-pointer items-center gap-8 rounded-md px-4 py-2 ">
             <div className="relative">
               <Link to="/cart">
                 <Icons.IconBag className="text-2xl" />
@@ -156,6 +70,71 @@ const Header = (props) => {
                 {member.data ? member.data.cart?.length : "?"}
               </span>
             </div>
+            {/* account start */}
+
+            <TippyHeadless
+              placement="bottom"
+              hideOnClick="true"
+              interactive
+              trigger="click"
+              render={(attrs) => (
+                <div className="box" tabIndex="-1" {...attrs}>
+                  <div className="w-64 border bg-white  p-4 shadow-md">
+                    {member.data && (
+                      <ul className="w-full">
+                        <li className="rounded-md px-2 capitalize ">
+                          <button className="block w-full hover:text-blue-500">
+                            Change avatar
+                          </button>
+                        </li>
+                        <li className="rounded-md px-2 capitalize ">
+                          <button className="block w-full hover:text-blue-500">
+                            Change password
+                          </button>
+                        </li>
+                        <li className="rounded-md px-2 capitalize ">
+                          <button
+                            onClick={() => handleLogout()}
+                            className="block w-full hover:text-blue-500"
+                          >
+                            Logout
+                          </button>
+                        </li>
+                      </ul>
+                    )}
+                    {!member.data && (
+                      <ul className={clsx("w-full")}>
+                        <li className="rounded-md px-2 capitalize ">
+                          <Link
+                            to="/signin"
+                            className="block w-full hover:text-blue-500"
+                          >
+                            Sigin
+                          </Link>
+                        </li>
+                        <li className="rounded-md px-2 capitalize ">
+                          <Link
+                            to="/signup"
+                            className="block w-full hover:text-blue-500"
+                          >
+                            Signup
+                          </Link>
+                        </li>
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              )}
+            >
+              <button className="flex">
+                <span className="font-bold capitalize">
+                  {member?.data?.userName || "Account"}
+                </span>
+                <Icons.IconCaretDown />
+              </button>
+            </TippyHeadless>
+
+            {/* account end */}
           </div>
           {/* cart end */}
         </div>
@@ -184,7 +163,7 @@ const Header = (props) => {
                   className={clsx(
                     "relative flex items-center rounded-md px-2 py-2 font-bold ",
                     {
-                      "bg-white": pathname === "/",
+                      "bg-slate-600 text-white": pathname.includes("home"),
                     },
                   )}
                 >
@@ -199,7 +178,7 @@ const Header = (props) => {
                   className={clsx(
                     "relative flex items-end rounded-md px-2 py-2 font-bold ",
                     {
-                      "bg-white": pathname.includes("product"),
+                      "bg-slate-600 text-white": pathname.includes("product"),
                     },
                   )}
                 >
@@ -214,7 +193,7 @@ const Header = (props) => {
                   className={clsx(
                     "relative flex items-end rounded-md px-2 py-2 font-bold ",
                     {
-                      "bg-white": pathname.includes("news"),
+                      "bg-slate-600 text-white": pathname.includes("news"),
                     },
                   )}
                 >
@@ -229,7 +208,7 @@ const Header = (props) => {
                   className={clsx(
                     "relative flex items-end rounded-md px-2 py-2 font-bold ",
                     {
-                      "bg-white": pathname.includes("about"),
+                      "bg-slate-600 text-white": pathname.includes("about"),
                     },
                   )}
                 >

@@ -15,7 +15,7 @@ const Sidebar = (props) => {
       <aside
         ref={sidebar}
         className={clsx(
-          "group absolute z-999 h-screen w-72 -translate-x-full overflow-hidden border-r-slate-200 bg-white px-2  shadow duration-200 ease-linear lg:absolute lg:-translate-x-full ",
+          "z-9999 group absolute h-screen w-72 -translate-x-full overflow-hidden border-r-slate-200 bg-white px-2  shadow duration-200 ease-linear lg:absolute lg:-translate-x-full ",
           {
             "!md:block translate-x-0 md:static": isSidebarOpen,
             "-translate-x-full": !isSidebarOpen,
@@ -49,11 +49,11 @@ const Sidebar = (props) => {
             <ul className="flex flex-col gap-4">
               {/* home start */}
               <Link
-                to="/"
+                to="/home"
                 className={clsx(
                   "relative flex items-center rounded-md px-2 py-2 font-bold hover:bg-slate-200",
                   {
-                    "text-blue-500": pathname === "/",
+                    "text-blue-500": pathname === "/home",
                   },
                 )}
               >

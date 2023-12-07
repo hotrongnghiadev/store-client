@@ -69,12 +69,14 @@ const Signin = () => {
 
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 p-4">
+      <div className=" flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 p-4">
         <div className="flex w-full items-center justify-between rounded-xl bg-white px-8 py-24 drop-shadow-2xl sm:px-20 lg:w-[50rem]">
           <div className="hidden w-3/5 md:block">
-            <Tilt options={reactTiltOptions}>
-              <img src={bgLogin} alt="bgLogin" />
-            </Tilt>
+            <Link to="/">
+              <Tilt options={reactTiltOptions}>
+                <img src={bgLogin} alt="bgLogin" />
+              </Tilt>
+            </Link>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}

@@ -58,7 +58,6 @@ const VoteOptions = (props) => {
       })
       .catch((err) => console.log(err));
   };
-  console.log(errors);
 
   return (
     <div

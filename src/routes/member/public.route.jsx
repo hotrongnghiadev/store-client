@@ -6,6 +6,7 @@ import About from "../../pages/member/About";
 import Signin from "../../pages/member/Signin";
 import Signup from "../../pages/member/Signup";
 import ProductDetail from "../../components/ProductDetail";
+import { Navigate } from "react-router-dom";
 
 const publicRouter = [
   {
@@ -24,12 +25,16 @@ const publicRouter = [
         element: <ProductDetail />,
       },
       {
-        path: "/",
+        path: "/home",
         element: <Home />,
       },
       {
         path: "/product",
         element: <Product />,
+      },
+      {
+        path: "/",
+        element: <Navigate to="/product" />,
       },
       {
         path: "/news",

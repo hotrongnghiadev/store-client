@@ -106,7 +106,6 @@ const CreateProduct = () => {
     defaultValues: {},
     resolver: yupResolver(create),
   });
-  console.log(errors);
 
   // use arrayField start
   const {
