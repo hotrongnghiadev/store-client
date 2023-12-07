@@ -59,7 +59,7 @@ const ProductDetail = () => {
           dispatch(memberReducer.addCart(product));
         })
         .catch((err) => console.log(err));
-    }
+    } else toast.info("Required signin");
   };
   // function end
 
@@ -180,9 +180,11 @@ const ProductDetail = () => {
           <Button
             type="button"
             onClick={(e) => {
-              setIsRate(true);
-              // prevent modal close because propagation
-              e.stopPropagation();
+              if (member.data) {
+                setIsRate(true);
+                // prevent modal close because propagation
+                e.stopPropagation();
+              } else toast.info("Required signin");
             }}
           >
             Review now

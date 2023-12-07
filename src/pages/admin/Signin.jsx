@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Icons from "../../components/Icons";
 import * as adminReducers from "../../redux/admin.slice";
@@ -38,6 +38,10 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues: {
+      userName: "admin01",
+      password: "123123",
+    },
     // mode: "onBlur",
     resolver: yupResolver(userValidator.signin),
     shouldFocusError: false,
@@ -72,9 +76,11 @@ const Signin = () => {
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 p-4">
         <div className="flex w-full items-center justify-between rounded-xl bg-white px-8 py-24 drop-shadow-2xl sm:px-20 lg:w-[50rem]">
           <div className="hidden w-3/5 md:block">
-            <Tilt options={reactTiltOptions}>
-              <img src={bgLogin} alt="bgLogin" />
-            </Tilt>
+            <Link to="/">
+              <Tilt options={reactTiltOptions}>
+                <img src={bgLogin} alt="bgLogin" />
+              </Tilt>
+            </Link>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -117,6 +123,9 @@ const Signin = () => {
               </button>
               <div className=" absolute left-[-100%] top-0 -z-10 h-full w-[200%] rounded-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-200 peer-hover:left-0 peer-active:scale-y-90"></div>
             </div>
+            <Link to="/" className="block text-center text-green-500 underline">
+              <Icons.IconHome className="text-4xl" />
+            </Link>
           </form>
         </div>
       </div>

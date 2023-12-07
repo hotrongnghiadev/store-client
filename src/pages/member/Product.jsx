@@ -54,7 +54,7 @@ const Product = () => {
           dispatch(memberReducer.addCart(product));
         })
         .catch((err) => console.log(err));
-    }
+    } else toast.info("Required signin");
   };
   const handleResultInfo = () => {
     const page = queries.page;
@@ -246,9 +246,9 @@ const Product = () => {
                                     "hover:bg-whiten rounded-md px-4 py-2",
                                   )}
                                   type="button"
-                                  onClick={() => handleAddCart(el.id)}
+                                  onClick={() => handleAddCart(el)}
                                 >
-                                  <Icons.IconBxsCartAdd className="text-2xl" />
+                                  <Icons.IconBxsCartAdd className="text-4xl" />
                                 </button>
                               );
                             }
@@ -260,7 +260,7 @@ const Product = () => {
                 );
               })}
               {products.length < 1 && loading && (
-                <div className="mt-4 flex w-full items-center justify-center gap-4 font-bold text-orange-500">
+                <div className="mt-4 flex h-12  w-full items-center justify-center gap-4 font-bold text-orange-500">
                   <Icons.IconLoading className="animate-spin text-3xl " />
                   <span className="uppercase">processing...</span>
                 </div>

@@ -6,6 +6,7 @@ import Search from "../../components/Search";
 
 const Header = (props) => {
   const { isSidebarOpen, setIsSidebarOpen } = props;
+
   return (
     <>
       <header className="sticky top-0 z-99 flex w-full items-center justify-between bg-white p-2 shadow ">

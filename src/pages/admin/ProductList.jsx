@@ -270,7 +270,7 @@ const Product = () => {
                 </table>
               </form>
               {products.length < 1 && loading && (
-                <div className="mt-4 flex items-center justify-center gap-4 font-bold text-orange-500">
+                <div className="mt-4 flex h-12 items-center justify-center gap-4 font-bold text-orange-500">
                   <Icons.IconLoading className="animate-spin text-3xl " />
                   <span className="uppercase">processing...</span>
                 </div>

@@ -12,8 +12,11 @@ export const slice = createSlice({
       state.accessToken = accessToken;
       state.data = data;
     },
+    logout: (state) => {
+      (state.accessToken = null), (state.data = null);
+    },
   },
 });
 
-export const { signin } = slice.actions;
+export const { signin, logout } = slice.actions;
 export default slice.reducer;

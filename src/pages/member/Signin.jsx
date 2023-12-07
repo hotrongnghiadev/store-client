@@ -125,6 +125,9 @@ const Signin = () => {
             >
               Signup new account
             </Link>
+            <Link to="/" className="block text-center text-green-500 underline">
+              <Icons.IconHome className="text-4xl" />
+            </Link>
           </form>
         </div>
       </div>
