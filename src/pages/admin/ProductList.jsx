@@ -273,6 +273,9 @@ const Product = () => {
                 <div className="mt-4 flex h-12 items-center justify-center gap-4 font-bold text-orange-500">
                   <Icons.IconLoading className="animate-spin text-3xl " />
                   <span className="uppercase">processing...</span>
+                  <span className="uppercase">
+                    Vui lòng chờ lâu một tý do sài đồ free, cám ơn ạ!
+                  </span>
                 </div>
               )}
               {!loading && products.length < 1 && (

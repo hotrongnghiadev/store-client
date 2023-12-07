@@ -164,10 +164,7 @@ const Product = () => {
             <ul className="mx-[-20px] flex flex-wrap p-8">
               {products.map((el, index) => {
                 return (
-                  <li
-                    key={index}
-                    className="mb-6 w-1/2 px-[20px] md:w-1/3 lg:w-1/4"
-                  >
+                  <li key={index} className="mb-6 w-1/2 px-[20px] md:w-1/3">
                     <div className="flex h-full flex-col justify-between rounded-md border bg-white p-[20px_10px_20px] drop-shadow">
                       <Link
                         to={`/product/${el.categoryId.name.toLowerCase()}/${
@@ -263,6 +260,9 @@ const Product = () => {
                 <div className="mt-4 flex h-12  w-full items-center justify-center gap-4 font-bold text-orange-500">
                   <Icons.IconLoading className="animate-spin text-3xl " />
                   <span className="uppercase">processing...</span>
+                  <span className="uppercase">
+                    Vui lòng chờ lâu một tý do sài đồ free, cám ơn ạ!
+                  </span>
                 </div>
               )}
               {!count && !loading && (

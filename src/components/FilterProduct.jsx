@@ -58,7 +58,7 @@ const FilterProduct = (props) => {
     <>
       <div
         className={clsx(
-          "fixed left-0 right-0 top-0 z-999 h-screen w-full border-r bg-white p-8 shadow-md  lg:static lg:block lg:w-fit",
+          "fixed left-0 right-0 top-0 z-999 h-screen w-full bg-white p-8  lg:static  lg:z-99 lg:block lg:w-fit",
           { hidden: !open },
         )}
       >
