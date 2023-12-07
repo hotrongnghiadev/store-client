@@ -50,7 +50,6 @@ const UpdateProduct = () => {
 
   // function start
   const onSubmit = async (data) => {
-    console.log(data);
     const formData = new FormData();
     // handle upload
     if (data.thumb instanceof FileList) formData.append("thumb", data.thumb[0]);

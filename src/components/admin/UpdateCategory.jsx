@@ -28,10 +28,10 @@ const UpdateCategory = (props) => {
     control,
     register,
     handleSubmit,
-    setValue,
-    formState: { errors, isDirty, isSubmitted },
+    formState: { errors, isDirty },
   } = useForm({
     mode: "onSubmit",
+    defaultValues: { ...category },
     shouldFocusError: false,
     resolver: yupResolver(categoryValidator.update),
   });
@@ -40,7 +40,6 @@ const UpdateCategory = (props) => {
       toast.warn("There's nothing to update");
       return;
     }
-    console.log(data);
     await categoryApi
       .update(category.id, data)
       .then((res) => {
@@ -53,16 +52,6 @@ const UpdateCategory = (props) => {
   // react-hook-form end
 
   // effect start
-  React.useEffect(() => {
-    // setValue in form
-    // data.name is uncontrolled, must use "or operator" to fix err
-    setName(category.name || "");
-    setDesc(category.desc || "");
-    // setValue in submit form
-    setValue("name", category.name);
-    setValue("desc", category.desc);
-  }, [category.name, category.desc, setValue, isOpen]);
-
   React.useEffect(() => {
     if (isDirty)
       setConfirmClose(() => {
@@ -94,8 +83,6 @@ const UpdateCategory = (props) => {
             error={errors.name?.message}
             className="rounded-md focus:border-blue-500"
             required
-            value={name}
-            setValue={setName}
           />
           <InputField
             control={control}
@@ -106,8 +93,6 @@ const UpdateCategory = (props) => {
             error={errors.desc?.message}
             className="h-32 rounded-md focus:border-blue-500"
             type="textarea"
-            value={desc}
-            setValue={setDesc}
           />
           <Button type="submit">
             <Icons.IconEdit className="text-2xl text-white" />

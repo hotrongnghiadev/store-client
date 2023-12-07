@@ -13,14 +13,12 @@ import brandApi from "../../api/brand.api";
 
 const UpdateBrand = (props) => {
   // props start
-  const { brand, isOpen, setIsOpen, setConfirmClose } = props;
+  const { brand, setIsOpen, setConfirmClose } = props;
   // props end
 
   // hook start
   const dispatch = useDispatch();
 
-  const [name, setName] = React.useState("");
-  const [desc, setDesc] = React.useState("");
   // hook end
 
   // react-hook-form start
@@ -28,9 +26,9 @@ const UpdateBrand = (props) => {
     control,
     register,
     handleSubmit,
-    setValue,
-    formState: { errors, isDirty, isSubmitted },
+    formState: { errors, isDirty },
   } = useForm({
+    defaultValues: { ...brand },
     mode: "onSubmit",
     shouldFocusError: false,
     resolver: yupResolver(brandValidator.update),
@@ -40,7 +38,6 @@ const UpdateBrand = (props) => {
       toast.warn("There's nothing to update");
       return;
     }
-    console.log(data);
     await brandApi
       .update(brand.id, data)
       .then((res) => {
@@ -51,17 +48,6 @@ const UpdateBrand = (props) => {
       .catch((err) => console.log(err));
   };
   // react-hook-form end
-
-  // effect start
-  React.useEffect(() => {
-    // setValue in form
-    // data.name is uncontrolled, must use "or operator" to fix err
-    setName(brand.name || "");
-    setDesc(brand.desc || "");
-    // setValue in submit form
-    setValue("name", brand.name);
-    setValue("desc", brand.desc);
-  }, [brand.name, brand.desc, setValue, isOpen]);
 
   React.useEffect(() => {
     if (isDirty)
@@ -94,8 +80,6 @@ const UpdateBrand = (props) => {
             error={errors.name?.message}
             className="rounded-md focus:border-blue-500"
             required
-            value={name}
-            setValue={setName}
           />
           <InputField
             control={control}
@@ -106,8 +90,6 @@ const UpdateBrand = (props) => {
             error={errors.desc?.message}
             className="h-32 rounded-md focus:border-blue-500"
             type="textarea"
-            value={desc}
-            setValue={setDesc}
           />
           <Button type="submit">
             <Icons.IconEdit className="text-2xl text-white" />

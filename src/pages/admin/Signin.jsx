@@ -100,7 +100,6 @@ const Signin = () => {
               fieldId="password"
               validator={register("password")}
               error={errors.password?.message}
-              setValue={() => {}}
               type="password"
               icon={<Icons.IconPassword />}
               className="rounded-full focus:animate-my-burn"

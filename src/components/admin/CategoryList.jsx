@@ -79,7 +79,6 @@ const CategoryList = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     if (
       window.confirm(
         `Are you sure you want to delete the ${check.length} checked category?`,

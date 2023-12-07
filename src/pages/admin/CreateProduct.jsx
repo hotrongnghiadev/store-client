@@ -46,7 +46,6 @@ const CreateProduct = () => {
 
   // function start
   const onSubmit = async (data) => {
-    console.log(data);
     const formData = new FormData();
     // handle upload
     if (data.thumb) formData.append("thumb", data.thumb[0]);
