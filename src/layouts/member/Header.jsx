@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import * as memberReducer from "../../redux/member.slice";
 import Icons from "../../components/Icons";
 import Logo from "../../assets/images/logo.svg";
-import Dropdown from "../../components/Dropdown";
 import Search from "../../components/Search";
 import { toast } from "react-toastify";
 import TippyHeadless from "@tippyjs/react/headless";
@@ -159,7 +158,7 @@ const Header = (props) => {
               <ul className="flex gap-8 ">
                 {/* home start */}
                 <Link
-                  to="/"
+                  to="/home"
                   className={clsx(
                     "relative flex items-center rounded-md px-2 py-2 font-bold ",
                     {
