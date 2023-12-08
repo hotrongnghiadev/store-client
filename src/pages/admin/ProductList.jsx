@@ -140,7 +140,7 @@ const Product = () => {
               <h3 className="text-xl font-bold capitalize">product list</h3>
               <Button
                 type="submit"
-                className={clsx("bg-red-500 transition-opacity", {
+                className={clsx("!bg-red-500 transition-opacity", {
                   "pointer-events-none opacity-0":
                     check.length < 1 || products.length < 1,
                 })}

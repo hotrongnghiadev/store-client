@@ -90,16 +90,14 @@ const Product = () => {
     const paramQueries = queryString.parse(arr.join("&"), {
       arrayFormat: "bracket",
     });
-    (async function () {
-      await productApi
+    (async () => {
+      const res = await productApi
         .filter(paramQueries)
-        .then((res) => {
-          dispatch(productReducer.set(res.data.data));
-          setArr(paginationArr(res.data.count, 1));
-          setCount(res.data.count);
-          setLoading(false);
-        })
         .catch((err) => console.log(err));
+      dispatch(productReducer.set(res.data.data));
+      setArr(paginationArr(res.data.count, 1));
+      setCount(res.data.count);
+      setLoading(false);
     })();
   }, [params]);
 

@@ -35,7 +35,7 @@ const Header = (props) => {
           {/* button end */}
 
           {/* search start */}
-          <div className="w-96">
+          <div className="sm:w-96">
             <Search />
           </div>
           {/* search end */}
