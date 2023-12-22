@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { formatNumber } from "../../utils/helpers";
 import Button from "../../components/Button";
@@ -16,7 +16,11 @@ const Cart = () => {
   const navigate = useNavigate();
   const member = useSelector((state) => state.member);
   // function start
-  const updateQuantity = async (id, quantity) => {
+  const updateQuantity = async (id, inventory, quantity) => {
+    if (quantity > inventory) {
+      toast.info(`Currently the store only has ${inventory} products left`);
+      return;
+    }
     if (quantity < 1) return;
     dispatch(memberReducer.updateQuantity({ id, quantity }));
   };
@@ -79,13 +83,25 @@ const Cart = () => {
                     <td className="p-4">
                       <div className="flex items-center">
                         <button
-                          onClick={() => updateQuantity(el.id, el.quantity - 1)}
+                          onClick={() =>
+                            updateQuantity(
+                              el.id,
+                              el.product.inventory,
+                              el.quantity - 1,
+                            )
+                          }
                         >
                           <Icons.IconMinus className="text-xl text-red-600" />
                         </button>
                         <span className="px-3">{el.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(el.id, el.quantity + 1)}
+                          onClick={() =>
+                            updateQuantity(
+                              el.id,
+                              el.product.inventory,
+                              el.quantity + 1,
+                            )
+                          }
                         >
                           <Icons.IconPlus className="text-xl text-green-600" />
                         </button>
@@ -151,7 +167,9 @@ const Cart = () => {
                     VNĐ
                   </span>
                   <Button className="mt-4 w-full ">
-                    <div className="w-full text-center">Proceed Checkout</div>
+                    <div className="w-full text-center">
+                      <Link to="/checkout">Proceed Checkout</Link>
+                    </div>
                   </Button>
                 </div>
               </div>

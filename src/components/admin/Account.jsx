@@ -28,19 +28,19 @@ const Account = () => {
                 {admin.data && (
                   <ul className="w-full">
                     <li className="rounded-md px-2 capitalize ">
-                      <button className="block w-full hover:text-blue-500">
+                      <button className="block w-full text-start hover:text-blue-500">
                         Change avatar
                       </button>
                     </li>
                     <li className="rounded-md px-2 capitalize ">
-                      <button className="block w-full hover:text-blue-500">
+                      <button className="block w-full text-start hover:text-blue-500">
                         Change password
                       </button>
                     </li>
                     <li className="rounded-md px-2 capitalize ">
                       <button
                         onClick={() => handleLogout()}
-                        className="block w-full hover:text-blue-500"
+                        className="block w-full text-start hover:text-blue-500"
                       >
                         Logout
                       </button>

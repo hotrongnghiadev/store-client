@@ -1,6 +1,9 @@
 import HandleRole from "./HandleRole";
 import Cart from "../../pages/member/Cart";
 import MainLayout from "../../layouts/member/MainLayout";
+import Checkout from "../../pages/member/Checkout";
+import Order from "../../pages/member/Order";
+import DetailOrder from "../../pages/member/DetailOrder";
 
 const privateRoute = [
   {
@@ -12,6 +15,18 @@ const privateRoute = [
           {
             path: "/cart",
             element: <Cart />,
+          },
+          {
+            path: "/checkout",
+            element: <Checkout />,
+          },
+          {
+            path: "/order",
+            element: <Order />,
+          },
+          {
+            path: "/detail-order/:id",
+            element: <DetailOrder />,
           },
         ],
       },

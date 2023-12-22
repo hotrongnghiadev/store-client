@@ -24,8 +24,8 @@ import { useForm } from "react-hook-form";
 const sortOptions = [
   { label: "Prices  increase ", value: "price" },
   { label: "Prices decrease", value: "-price" },
-  { label: "Names  a-z", value: "-name" },
-  { label: "Names  z-a", value: "name" },
+  { label: "Names  a-z", value: "name" },
+  { label: "Names  z-a", value: "-name" },
   { label: "Latest", value: "createAt" },
   { label: "Oldest", value: "-createAt" },
 ];
@@ -56,6 +56,7 @@ const Product = () => {
         .catch((err) => console.log(err));
     } else toast.info("Required signin");
   };
+
   const handleResultInfo = () => {
     const page = queries.page;
     const limit = import.meta.env.VITE_BASE_PAGINATION_SIZE;
@@ -109,7 +110,7 @@ const Product = () => {
   }, [queries]);
 
   React.useEffect(() => {
-    if (member.data) {
+    if (!member.data) {
       dispatch(getCurrent());
     }
   }, []);
@@ -162,7 +163,7 @@ const Product = () => {
             <ul className="mx-[-20px] flex flex-wrap p-8">
               {products.map((el, index) => {
                 return (
-                  <li key={index} className="mb-6 w-1/2 px-[20px] md:w-1/3">
+                  <li key={index} className="mb-6 px-[20px] sm:w-1/2 md:w-1/4">
                     <div className="flex h-full flex-col justify-between rounded-md border bg-white p-[20px_10px_20px] drop-shadow">
                       <Link
                         to={`/product/${el.categoryId.name.toLowerCase()}/${
@@ -221,7 +222,7 @@ const Product = () => {
                                   )}
                                   type="button"
                                 >
-                                  <Icons.IconCartCheckFill className="text-3xl text-orange-500" />
+                                  <Icons.IconBagCheckFill className="text-2xl text-orange-500" />
                                 </button>
                               ) : (
                                 <button
@@ -231,7 +232,7 @@ const Product = () => {
                                   type="button"
                                   onClick={() => handleAddCart(el)}
                                 >
-                                  <Icons.IconBxsCartAdd className="text-4xl" />
+                                  <Icons.IconBagPlusFill className="text-2xl" />
                                 </button>
                               );
                             } else {

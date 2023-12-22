@@ -1,4 +1,50 @@
 const Icons = {
+  IconBill(props) {
+    return (
+      <svg
+        data-name="Layer 1"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        height="1em"
+        width="1em"
+        {...props}
+      >
+        <path d="M9.5 10.5H12a1 1 0 000-2h-1V8a1 1 0 00-2 0v.55a2.5 2.5 0 00.5 4.95h1a.5.5 0 010 1H8a1 1 0 000 2h1v.5a1 1 0 002 0v-.55a2.5 2.5 0 00-.5-4.95h-1a.5.5 0 010-1zM21 12h-3V3a1 1 0 00-.5-.87 1 1 0 00-1 0l-3 1.72-3-1.72a1 1 0 00-1 0l-3 1.72-3-1.72a1 1 0 00-1 0A1 1 0 002 3v16a3 3 0 003 3h14a3 3 0 003-3v-6a1 1 0 00-1-1zM5 20a1 1 0 01-1-1V4.73l2 1.14a1.08 1.08 0 001 0l3-1.72 3 1.72a1.08 1.08 0 001 0l2-1.14V19a3 3 0 00.18 1zm15-1a1 1 0 01-2 0v-5h2z" />
+      </svg>
+    );
+  },
+  IconBagCheckFill(props) {
+    return (
+      <svg
+        fill="currentColor"
+        viewBox="0 0 16 16"
+        height="1em"
+        width="1em"
+        {...props}
+      >
+        <path
+          fillRule="evenodd"
+          d="M10.5 3.5a2.5 2.5 0 00-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 01-2 2H3a2 2 0 01-2-2V4h3.5v-.5a3.5 3.5 0 117 0zm-.646 5.354a.5.5 0 00-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 10-.708.708l1.5 1.5a.5.5 0 00.708 0l3-3z"
+        />
+      </svg>
+    );
+  },
+  IconBagPlusFill(props) {
+    return (
+      <svg
+        fill="currentColor"
+        viewBox="0 0 16 16"
+        height="1em"
+        width="1em"
+        {...props}
+      >
+        <path
+          fillRule="evenodd"
+          d="M10.5 3.5a2.5 2.5 0 00-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 01-2 2H3a2 2 0 01-2-2V4h3.5v-.5a3.5 3.5 0 117 0zM8.5 8a.5.5 0 00-1 0v1.5H6a.5.5 0 000 1h1.5V12a.5.5 0 001 0v-1.5H10a.5.5 0 000-1H8.5V8z"
+        />
+      </svg>
+    );
+  },
   IconCaretDown(props) {
     return (
       <svg

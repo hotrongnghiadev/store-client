@@ -6,6 +6,8 @@ import Category from "../../pages/admin/Category";
 import CreateProduct from "../../pages/admin/CreateProduct";
 import UpdateProduct from "../../components/admin/UpdateProduct";
 import HandleRole from "./HandleRole";
+import Order from "../../pages/admin/Order";
+import DetailOrder from "../../pages/admin/DetailOrder";
 
 const privateRouter = [
   {
@@ -42,6 +44,14 @@ const privateRouter = [
           {
             path: "category",
             element: <Category />,
+          },
+          {
+            path: "order",
+            element: <Order />,
+          },
+          {
+            path: "detail-order/:id",
+            element: <DetailOrder />,
           },
         ],
       },

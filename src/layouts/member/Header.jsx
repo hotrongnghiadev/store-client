@@ -82,19 +82,27 @@ const Header = (props) => {
                     {member.data && (
                       <ul className="w-full">
                         <li className="rounded-md px-2 capitalize ">
-                          <button className="block w-full hover:text-blue-500">
+                          <Link
+                            to="/order"
+                            className="block w-full text-left hover:text-blue-600"
+                          >
+                            Order
+                          </Link>
+                        </li>
+                        <li className="rounded-md px-2 capitalize ">
+                          <button className="block w-full text-left hover:text-blue-600">
                             Change avatar
                           </button>
                         </li>
                         <li className="rounded-md px-2 capitalize ">
-                          <button className="block w-full hover:text-blue-500">
+                          <button className="block w-full text-left hover:text-blue-600">
                             Change password
                           </button>
                         </li>
                         <li className="rounded-md px-2 capitalize ">
                           <button
                             onClick={() => handleLogout()}
-                            className="block w-full hover:text-blue-500"
+                            className="block w-full text-left hover:text-blue-600"
                           >
                             Logout
                           </button>
@@ -106,7 +114,7 @@ const Header = (props) => {
                         <li className="rounded-md px-2 capitalize ">
                           <Link
                             to="/signin"
-                            className="block w-full hover:text-blue-500"
+                            className="block w-full text-left hover:text-blue-600"
                           >
                             Sigin
                           </Link>
@@ -114,7 +122,7 @@ const Header = (props) => {
                         <li className="rounded-md px-2 capitalize ">
                           <Link
                             to="/signup"
-                            className="block w-full hover:text-blue-500"
+                            className="block w-full text-left hover:text-blue-600"
                           >
                             Signup
                           </Link>
@@ -142,7 +150,7 @@ const Header = (props) => {
         {/* header-menu */}
         <div className="hidden h-16 bg-primary px-4 lg:block">
           <div className="container-lg mx-auto flex h-full items-center gap-8 text-black">
-            <div className="mt-2 h-14 w-72 rounded-t-md bg-white">
+            {/* <div className="mt-2 h-14 w-72 rounded-t-md bg-white">
               <button className="flex h-full w-full items-center justify-between px-4">
                 <div className="flex items-center gap-2">
                   <Icons.IconBxCategoryAlt className="text-2xl" />
@@ -152,10 +160,10 @@ const Header = (props) => {
                   <Icons.IconDown />
                 </div>
               </button>
-            </div>
+            </div> */}
 
             <nav>
-              <ul className="flex gap-8 ">
+              <ul className="flex gap-16">
                 {/* home start */}
                 <Link
                   to="/home"

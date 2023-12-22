@@ -168,6 +168,21 @@ const Sidebar = (props) => {
                 <span className="pl-2 text-lg capitalize">category</span>
               </Link>
               {/* category end */}
+
+              {/* order start */}
+              <Link
+                to="/admin/order"
+                className={clsx(
+                  "relative flex items-end rounded-md px-2 py-2 font-bold hover:bg-slate-200",
+                  {
+                    "text-blue-500": pathname.includes("order"),
+                  },
+                )}
+              >
+                <Icons.IconBill className="text-2xl" />
+                <span className="pl-2 text-lg capitalize">order</span>
+              </Link>
+              {/* order end */}
             </ul>
           </nav>
         </div>

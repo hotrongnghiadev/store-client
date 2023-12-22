@@ -31,6 +31,10 @@ const productApi = {
     const url = `product/get-one/${slug}`;
     return publicAxios.get(url);
   },
+  getOneById(id) {
+    const url = `product/get-one-by-id/${id}`;
+    return publicAxios.get(url);
+  },
   filter(query) {
     const url = `product/filter`;
     return publicAxios.get(url, { params: query });
