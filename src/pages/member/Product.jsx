@@ -1,9 +1,4 @@
-import {
-  useSearchParams,
-  useNavigate,
-  useParams,
-  Link,
-} from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import queryString from "query-string";
 
@@ -26,8 +21,8 @@ const sortOptions = [
   { label: "Prices decrease", value: "-price" },
   { label: "Names  a-z", value: "name" },
   { label: "Names  z-a", value: "-name" },
-  { label: "Latest", value: "createAt" },
-  { label: "Oldest", value: "-createAt" },
+  { label: "Most recently", value: "createdAt" },
+  { label: "Older", value: "-createdAt" },
 ];
 
 const Product = () => {
@@ -76,7 +71,7 @@ const Product = () => {
   // react-hook-form start
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
-      sort: "createAt",
+      sort: "createdAt",
     },
   });
 
@@ -160,11 +155,14 @@ const Product = () => {
                 />
               </form>
             </div>
-            <ul className="mx-[-20px] flex flex-wrap p-8">
+            <ul className="mx-[-1rem] flex flex-wrap p-8">
               {products.map((el, index) => {
                 return (
-                  <li key={index} className="mb-6 px-[20px] sm:w-1/2 md:w-1/4">
-                    <div className="flex h-full flex-col justify-between rounded-md border bg-white p-[20px_10px_20px] drop-shadow">
+                  <li
+                    key={index}
+                    className="mb-6 px-[1rem] sm:w-1/2 md:w-1/2 xl:w-1/4"
+                  >
+                    <div className="flex h-full flex-col justify-between rounded-md border bg-white p-4 drop-shadow">
                       <Link
                         to={`/product/${el.categoryId.name.toLowerCase()}/${
                           el.slug

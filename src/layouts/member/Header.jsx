@@ -24,7 +24,7 @@ const Header = (props) => {
   // function end
   return (
     <>
-      <header className="sticky top-0 z-999  w-full  bg-white shadow">
+      <header className="sticky top-0 z-999 w-full  bg-white  text-sm shadow">
         {/* header-content start */}
         <div className="flex items-center justify-between px-4 py-2">
           {/* handle show/hidden sidebar */}
@@ -134,7 +134,7 @@ const Header = (props) => {
               )}
             >
               <button className="flex">
-                <span className="font-bold capitalize">
+                <span className="text-sm font-bold capitalize">
                   {member?.data?.userName || "Account"}
                 </span>
                 <Icons.IconCaretDown />
@@ -146,89 +146,76 @@ const Header = (props) => {
           {/* cart end */}
         </div>
         {/* header-content end */}
-
-        {/* header-menu */}
-        <div className="hidden h-16 bg-primary px-4 lg:block">
-          <div className="container-lg mx-auto flex h-full items-center gap-8 text-black">
-            {/* <div className="mt-2 h-14 w-72 rounded-t-md bg-white">
-              <button className="flex h-full w-full items-center justify-between px-4">
-                <div className="flex items-center gap-2">
-                  <Icons.IconBxCategoryAlt className="text-2xl" />
-                  <span className="font-bold capitalize">all categories</span>
-                </div>
-                <div>
-                  <Icons.IconDown />
-                </div>
-              </button>
-            </div> */}
-
-            <nav>
-              <ul className="flex gap-16">
-                {/* home start */}
-                <Link
-                  to="/home"
-                  className={clsx(
-                    "relative flex items-center rounded-md px-2 py-2 font-bold ",
-                    {
-                      "bg-slate-600 text-white": pathname.includes("home"),
-                    },
-                  )}
-                >
-                  <Icons.IconHome className="text-2xl" />
-                  <span className="pl-2 text-lg capitalize">home</span>
-                </Link>
-                {/* home end */}
-
-                {/* product start*/}
-                <Link
-                  to="/product"
-                  className={clsx(
-                    "relative flex items-end rounded-md px-2 py-2 font-bold ",
-                    {
-                      "bg-slate-600 text-white": pathname.includes("product"),
-                    },
-                  )}
-                >
-                  <Icons.IconShop className="text-2xl" />
-                  <span className="pl-2 text-lg capitalize">product</span>
-                </Link>
-                {/* product end */}
-
-                {/* news start */}
-                <Link
-                  to="/news"
-                  className={clsx(
-                    "relative flex items-end rounded-md px-2 py-2 font-bold ",
-                    {
-                      "bg-slate-600 text-white": pathname.includes("news"),
-                    },
-                  )}
-                >
-                  <Icons.IconNewspaper className="text-2xl" />
-                  <span className="pl-2 text-lg capitalize">news</span>
-                </Link>
-                {/* news end */}
-
-                {/* about start */}
-                <Link
-                  to="/about"
-                  className={clsx(
-                    "relative flex items-end rounded-md px-2 py-2 font-bold ",
-                    {
-                      "bg-slate-600 text-white": pathname.includes("about"),
-                    },
-                  )}
-                >
-                  <Icons.IconInfo className="text-2xl" />
-                  <span className="pl-2 text-lg capitalize">about</span>
-                </Link>
-                {/* about end */}
-              </ul>
-            </nav>
-          </div>
-        </div>
-        {/* header-menu */}
       </header>
+      {/* header-menu */}
+      <div className="hidden bg-primary px-4  py-2 lg:block">
+        <div className="container-lg mx-auto flex h-full items-center gap-8 text-black">
+          <nav>
+            <ul className="flex gap-16">
+              {/* home start */}
+              <Link
+                to="/home"
+                className={clsx(
+                  "relative flex items-center rounded-md px-2 font-bold ",
+                  {
+                    "bg-slate-600 text-white": pathname.includes("home"),
+                  },
+                )}
+              >
+                <Icons.IconHome className="text-2xl" />
+                <span className="pl-2 capitalize">home</span>
+              </Link>
+              {/* home end */}
+
+              {/* product start*/}
+              <Link
+                to="/product"
+                className={clsx(
+                  "relative flex items-end rounded-md px-2 py-2 font-bold ",
+                  {
+                    "bg-slate-600 text-white": pathname.includes("product"),
+                  },
+                )}
+              >
+                <Icons.IconShop className="text-2xl" />
+                <span className="pl-2 capitalize">product</span>
+              </Link>
+              {/* product end */}
+
+              {/* news start */}
+              <Link
+                to="/news"
+                className={clsx(
+                  "relative flex items-end rounded-md px-2 py-2 font-bold ",
+                  {
+                    "bg-slate-600 text-white": pathname.includes("news"),
+                  },
+                )}
+              >
+                <Icons.IconNewspaper className="text-2xl" />
+                <span className="pl-2 capitalize">news</span>
+              </Link>
+              {/* news end */}
+
+              {/* about start */}
+              <Link
+                to="/about"
+                className={clsx(
+                  "relative flex items-end rounded-md px-2 py-2 font-bold ",
+                  {
+                    "bg-slate-600 text-white": pathname.includes("about"),
+                  },
+                )}
+              >
+                <Icons.IconInfo className="text-2xl" />
+                <span className="pl-2 capitalize">about</span>
+              </Link>
+              {/* about end */}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      {/* header-menu */}
     </>
   );
 };

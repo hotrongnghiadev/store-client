@@ -55,7 +55,7 @@ const Signin = () => {
           toast.error("Please signin with admin account");
         else {
           dispatch(adminReducers.signin(res.data));
-          navigate("/admin");
+          navigate("/admin/product/list");
         }
       })
       .catch((err) => {
