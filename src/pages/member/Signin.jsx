@@ -38,6 +38,10 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues: {
+      userName: "user01",
+      password: "123123",
+    },
     resolver: yupResolver(userValidator.signin),
     shouldFocusError: false,
   });

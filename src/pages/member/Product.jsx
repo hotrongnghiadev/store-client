@@ -36,7 +36,7 @@ const Product = () => {
   const [count, setCount] = React.useState(0);
   const [arr, setArr] = React.useState([]);
   const [isFilter, setIsFilter] = React.useState(false);
-  const [queries, setQueries] = React.useState({ page: 1, sort: "createAt" });
+  const [queries, setQueries] = React.useState({ page: 1, sort: "createdAt" });
   // hook end
 
   // function start
@@ -257,14 +257,11 @@ const Product = () => {
                 <div className="mt-4 flex h-12  w-full items-center justify-center gap-4 font-bold text-orange-500">
                   <Icons.IconLoading className="animate-spin text-3xl " />
                   <span className="uppercase">processing...</span>
-                  <span className="uppercase">
-                    Vui lòng chờ lâu một tý do sài đồ free, cám ơn ạ!
-                  </span>
                 </div>
               )}
               {!count && !loading && (
                 <div className="w-full text-center text-2xl font-bold text-orange-500">
-                  Không tìm sản phẩm phù hợp
+                  Can not find suitable products
                 </div>
               )}
             </ul>
